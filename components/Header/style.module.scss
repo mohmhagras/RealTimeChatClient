@@ -1,0 +1,32 @@
+@use "../../styles/colors";
+@import "../../styles/mixins";
+
+#header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: colors.$primary;
+  width: 100vw;
+  padding: 8px 32px;
+
+  @include mid-size() {
+    flex-direction: row;
+    justify-content: center;
+  }
+  button {
+    background-color: colors.$primary;
+    color: white;
+    padding: 4px 12px;
+    border: none;
+    font-size: 1.5rem;
+    margin-left: 16px;
+    font-weight: 300;
+    border-radius: 4px;
+  }
+  h1 {
+    color: white;
+    margin-left: 8px;
+    font-weight: 500;
+  }
+}
