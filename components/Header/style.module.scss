@@ -2,18 +2,15 @@
 @import "../../styles/mixins";
 
 #header {
+  position: fixed;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   background-color: colors.$primary;
   width: 100vw;
+  height: 86px;
   padding: 8px 32px;
-
-  @include mid-size() {
-    flex-direction: row;
-    justify-content: center;
-  }
   button {
     background-color: colors.$primary;
     color: white;
@@ -28,5 +25,8 @@
     color: white;
     margin-left: 8px;
     font-weight: 500;
+  }
+  #userphoto {
+    cursor: pointer;
   }
 }

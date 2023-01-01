@@ -1,3 +1,4 @@
+@use "./colors";
 :root {
   font-size: 18px;
 }
@@ -31,6 +32,13 @@ h1 {
   align-items: center;
 }
 
+.horizontal-left-aligned-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .vertical-left-aligned-container {
   display: flex;
   flex-direction: column;
@@ -50,11 +58,29 @@ button {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  .icon {
-    margin-right: 4px;
-  }
 }
 
 .required-sup {
   color: red;
+}
+.icon {
+  margin-right: 4px;
+}
+.icon-spaced {
+  margin-right: 8px;
+}
+.icon-left-margin {
+  margin-left: 4px;
+}
+.icon-with-bg {
+  background-color: colors.$secondary;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+main {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 86px;
 }

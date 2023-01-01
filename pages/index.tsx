@@ -3,8 +3,10 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import AuthScreen from "../components/AuthScreen";
+import ChatScreen from "../components/ChatScreen";
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <>
       <Head>
@@ -13,7 +15,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>{isLoggedIn ? "" : <AuthScreen />}</main>
+      <main>{isLoggedIn ? <ChatScreen /> : <AuthScreen />}</main>
     </>
   );
 }
