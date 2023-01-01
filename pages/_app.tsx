@@ -1,9 +1,8 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
-import Header from "../components/Header";
 import localFont from "@next/font/local";
+import UserContextProvider from "../Context/UserContext";
 
-const isLoggedIn = false;
 const euclid = localFont({
   src: [
     {
@@ -31,14 +30,13 @@ const euclid = localFont({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <UserContextProvider>
       <style jsx global>{`
         * {
           font-family: ${euclid.style.fontFamily};
         }
       `}</style>
-      {isLoggedIn ? <Header /> : ""}
       <Component {...pageProps} />
-    </>
+    </UserContextProvider>
   );
 }

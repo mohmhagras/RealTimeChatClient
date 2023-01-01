@@ -1,21 +1,39 @@
 import { FiLogIn } from "react-icons/fi";
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import { userContext } from "../../Context/UserContext";
+
+interface LoginResponse {
+  token: string;
+}
+
 export default function Login() {
   const usernamRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const { setToken } = useContext(userContext);
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    try {
+      const response = await fetch("https://localhost:7298/api/Auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: usernamRef?.current?.value,
+          password: passwordRef?.current?.value,
+        }),
+      });
 
-    const token = await fetch("https://localhost:7298/api/Auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        username: usernamRef?.current?.value,
-        password: passwordRef?.current?.value,
-      }),
-    });
-
-    console.log(token);
+      if (response.status === 400) {
+        alert(response.statusText);
+      } else {
+        const data: LoginResponse = await response.json();
+        setToken(data.token);
+      }
+    } catch (error) {
+      // alert(error);
+    }
   };
 
   return (

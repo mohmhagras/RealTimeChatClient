@@ -19,5 +19,32 @@
   section {
     width: 100%;
     border-bottom: 1px solid lightgray;
+    margin-bottom: 8px;
+  }
+  .friend-item {
+    padding: 0px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    label,
+    input,
+    button {
+      font-size: 0.8rem;
+    }
+    button,
+    input {
+      margin-top: 8px;
+      width: 100%;
+      padding: 6px 8px;
+    }
+    button {
+      background-color: colors.$primary;
+      color: white;
+    }
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-left: 8px;
+    text-transform: lowercase;
   }
 }

@@ -1,11 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "../styles/Home.module.css";
 import AuthScreen from "../components/AuthScreen";
 import ChatScreen from "../components/ChatScreen";
+import { userContext } from "../Context/UserContext";
+import Header from "../components/Header";
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isSignedIn } = useContext(userContext);
 
   return (
     <>
@@ -15,7 +17,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>{isLoggedIn ? <ChatScreen /> : <AuthScreen />}</main>
+      {isSignedIn ? <Header /> : null}
+      <main className={isSignedIn ? "withPadding" : ""}>
+        {isSignedIn ? <ChatScreen /> : <AuthScreen />}
+      </main>
     </>
   );
 }

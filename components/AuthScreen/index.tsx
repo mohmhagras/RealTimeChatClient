@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Register from "./Register";
 import Login from "./Login";
 import styles from "./style.module.scss";
+import { userContext } from "../../Context/UserContext";
 export default function AuthScreen() {
   const [mode, setMode] = useState(0);
-
   useEffect(() => {
     setMode(JSON.parse(localStorage.getItem("hasAccount") || "0") || 0);
   }, []);

@@ -1,9 +1,11 @@
-import { FC } from "react";
-import Link from "next/link";
 import styles from "./style.module.scss";
 import Image from "next/image";
 import userIcon from "../../public/images/user.png";
+import { useContext } from "react";
+import { userContext } from "../../Context/UserContext";
 export default function Header() {
+  const { user } = useContext(userContext);
+
   return (
     <header id={styles.header}>
       <div className="horizontal-centered-container">
@@ -20,11 +22,11 @@ export default function Header() {
         Login
   </button>*/}
       <Image
-        src={userIcon}
+        src={user?.imageUrl || userIcon}
         alt="user icon"
         width={50}
         height={50}
-        id={styles.userphoto}
+        className="user-image"
       />
     </header>
   );

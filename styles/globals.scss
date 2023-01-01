@@ -82,5 +82,24 @@ button {
 main {
   width: 100vw;
   height: 100vh;
-  padding-top: 86px;
+  &.withPadding {
+    padding-top: 86px;
+  }
+}
+
+.user-image {
+  cursor: pointer;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+}
+
+input {
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  outline: none;
 }
