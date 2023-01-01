@@ -74,7 +74,9 @@ export default function SidebarItem({
           {item.filledIcon}
         </div>
         <div className={styles["friend-item"]}>
-          {showFriendRequestBox ? <FriendRequest /> : null}
+          {showFriendRequestBox ? (
+            <FriendRequest setShowFriendRequestBox={setShowFriendRequestBox} />
+          ) : null}
         </div>
       </div>
     );

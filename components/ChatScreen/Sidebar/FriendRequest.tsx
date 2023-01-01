@@ -1,18 +1,26 @@
 import { FormEvent, useRef, useContext } from "react";
 import { userContext } from "../../../Context/UserContext";
-export default function FriendRequest() {
+export default function FriendRequest({ setShowFriendRequestBox }) {
   const { token } = useContext(userContext);
-  const usernameRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>();
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    await fetch("https://localhost:7298/api/User/acceptrequest", {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: usernameRef?.current?.value,
-    });
+    try {
+      await fetch(
+        `https://localhost:7298/api/User/sendrequest/${usernameRef.current.value}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      alert("Request Sent!");
+      setShowFriendRequestBox(false);
+    } catch (error) {
+      alert(error);
+    }
   };
   return (
     <form onSubmit={handleFormSubmit}>

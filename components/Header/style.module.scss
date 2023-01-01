@@ -26,4 +26,24 @@
     margin-left: 8px;
     font-weight: 500;
   }
+  #user-options-menu {
+    position: absolute;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    right: 0;
+    top: 100%;
+    list-style-type: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+  #user-options-menu li {
+    padding: 20px 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+  }
+  #user-options-menu li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }

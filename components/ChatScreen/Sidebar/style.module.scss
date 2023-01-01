@@ -5,6 +5,7 @@
   max-width: 280px;
   border-right: 1px solid lightgray;
   position: relative;
+  padding: 24px 16px;
   .item {
     margin-bottom: 8px;
     font-size: 1rem;
@@ -19,6 +20,7 @@
   section {
     width: 100%;
     border-bottom: 1px solid lightgray;
+    padding-bottom: 8px;
     margin-bottom: 8px;
   }
   .friend-item {
@@ -41,10 +43,31 @@
       color: white;
     }
   }
+
   h3 {
     font-size: 1rem;
     font-weight: 400;
     margin-left: 8px;
-    text-transform: lowercase;
+  }
+  p {
+    margin-left: 8px;
+    font-size: 0.8rem;
+  }
+}
+#requests-sidebar {
+  background-color: colors.$fourth;
+  max-width: 320px;
+  button {
+    padding: 6px 18px;
+    width: fit-content;
+    margin-left: 8px;
+  }
+  #accept {
+    color: black;
+    background-color: colors.$secondary;
+  }
+  #ignore {
+    color: black;
+    background-color: colors.$fourth;
   }
 }

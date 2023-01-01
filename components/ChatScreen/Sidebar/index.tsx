@@ -4,11 +4,15 @@ import { useContext, useState } from "react";
 import { userContext } from "../../../Context/UserContext";
 import { useEffect } from "react";
 import FriendsList from "./FriendsList";
-
-export default function Sidebar() {
+import { Dispatch, SetStateAction } from "react";
+export default function Sidebar({
+  mode,
+  setMode,
+}: {
+  mode: number;
+  setMode?: Dispatch<SetStateAction<number>>;
+}) {
   const { user } = useContext(userContext);
-
-  const [mode, setMode] = useState<number>(0); //0: chat, 1: friend requests
 
   return (
     <aside className={styles.sidebar}>
