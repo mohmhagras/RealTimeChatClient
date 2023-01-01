@@ -1,6 +1,8 @@
 import { Friend } from "../../../interfaces";
 import Image from "next/image";
 import styles from "./style.module.scss";
+import userIcon from "../../../public/images/user-black.png";
+
 export default function FriendsList({ friends }: { friends: Array<Friend> }) {
   return (
     <div>
@@ -11,7 +13,7 @@ export default function FriendsList({ friends }: { friends: Array<Friend> }) {
             key={index}
           >
             <Image
-              src={friend.imageUrl}
+              src={friend.imageUrl || userIcon}
               width={35}
               height={35}
               alt="logo"

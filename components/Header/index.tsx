@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 export default function Header() {
   const router = useRouter();
   const { user } = useContext(userContext);
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(true);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   return (
     <header id={styles.header}>
       <div className="horizontal-centered-container">

@@ -3,7 +3,9 @@ import { IoCreateOutline } from "react-icons/io5";
 import { useRef } from "react";
 import { storage } from "../../config/Firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useRouter } from "next/router";
 export default function Register() {
+  const router = useRouter();
   const usernameRef = useRef<HTMLInputElement>(null);
   const profilePicRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
@@ -35,7 +37,9 @@ export default function Register() {
       alert(response.statusText);
       return;
     }
-    console.log(await response.json());
+    await response.json();
+    localStorage.setItem("hasAccount", JSON.stringify(true));
+    router.reload();
   };
 
   return (

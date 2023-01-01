@@ -6,7 +6,7 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      await fetch(
+      const response = await fetch(
         `https://localhost:7298/api/User/sendrequest/${usernameRef.current.value}`,
         {
           method: "POST",
@@ -16,8 +16,13 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
           },
         }
       );
-      alert("Request Sent!");
-      setShowFriendRequestBox(false);
+      if (response.status >= 400) {
+        alert(await response.text());
+        return;
+      } else {
+        alert("Request Sent!");
+        setShowFriendRequestBox(false);
+      }
     } catch (error) {
       alert(error);
     }

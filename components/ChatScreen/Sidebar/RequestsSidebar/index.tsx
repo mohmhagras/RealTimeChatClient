@@ -3,14 +3,19 @@ import { useContext, useEffect, useState } from "react";
 import { userContext } from "../../../../Context/UserContext";
 import { Friend, User } from "../../../../interfaces";
 import Image from "next/image";
+import userIcon from "../../../../public/images/user-black.png";
+import { useRouter } from "next/router";
 export default function RequestsSidebar() {
+  const router = useRouter();
   const { token, user } = useContext(userContext);
   const [requests, setRequests] = useState<Array<User>>();
-
   const countMutualFriends = (friends: Array<Friend>): number => {
     let count = 0;
-    friends.forEach((friend) => {
-      if (user.friends.includes(friend)) count++;
+    console.log(friends);
+    friends.forEach(({ username }) => {
+      user.friends.forEach((friend) => {
+        if (username === friend.username) count++;
+      });
     });
     return count;
   };
@@ -38,22 +43,18 @@ export default function RequestsSidebar() {
 
   const acceptRequest = async (acceptedUser: User) => {
     try {
-      await fetch(
-        `https://localhost:7298/api/User/acceptrequest/${user.imageUrl}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(acceptedUser),
-        }
-      );
+      await fetch(`https://localhost:7298/api/User/acceptrequest`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(acceptedUser),
+      });
       setRequests((prevState) =>
-        prevState.filter(({ username }) => {
-          username !== acceptedUser.username;
-        })
+        prevState.filter(({ username }) => username !== acceptedUser.username)
       );
+      router.reload();
     } catch (error) {
       alert(error);
     }
@@ -66,6 +67,7 @@ export default function RequestsSidebar() {
           <div
             className={`vertical-left-aligned-container ${styles["friend-item"]}`}
             key={index}
+            style={{ marginBottom: "16px" }}
           >
             <div
               className={`horizontal-left-aligned-container`}
@@ -73,7 +75,7 @@ export default function RequestsSidebar() {
               style={{ cursor: "default" }}
             >
               <Image
-                src={request.imageUrl}
+                src={request.imageUrl || userIcon}
                 width={40}
                 height={40}
                 alt="logo"
@@ -83,7 +85,7 @@ export default function RequestsSidebar() {
                 <h3>{request.username}</h3>
                 <p>{` ${
                   countMutualFriends(request.friends) || "No"
-                } mutual Friends`}</p>
+                } mutual friends`}</p>
               </div>
             </div>
             <div className={`horizontal-right-aligned-container`}>
@@ -95,6 +97,7 @@ export default function RequestsSidebar() {
           </div>
         );
       })}
+      {!requests?.length ? <h3>No friend requests at the moment.</h3> : null}
     </aside>
   );
 }
