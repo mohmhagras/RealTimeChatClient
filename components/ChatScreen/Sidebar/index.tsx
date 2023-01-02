@@ -29,7 +29,7 @@ export default function Sidebar({
         isSelected={mode === 2}
         numberOfFriends={user?.friends?.length || 0}
       />
-      <FriendsList friends={user?.friends} />
+      <FriendsList friends={user?.friends} setMode={setMode} />
     </aside>
   );
 }

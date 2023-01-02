@@ -2,8 +2,21 @@ import { Friend } from "../../../interfaces";
 import Image from "next/image";
 import styles from "./style.module.scss";
 import userIcon from "../../../public/images/user-black.png";
+import { useContext } from "react";
+import { userContext } from "../../../Context/UserContext";
+export default function FriendsList({
+  friends,
+  setMode,
+}: {
+  friends: Array<Friend>;
+  setMode: any;
+}) {
+  const { setNewChat } = useContext(userContext);
 
-export default function FriendsList({ friends }: { friends: Array<Friend> }) {
+  const handleClickOnFriend = (username) => {
+    setMode(0);
+    setNewChat(username);
+  };
   return (
     <div>
       {friends?.map((friend, index) => {
@@ -11,6 +24,7 @@ export default function FriendsList({ friends }: { friends: Array<Friend> }) {
           <div
             className={`horizontal-left-aligned-container ${styles["friend-item"]}`}
             key={index}
+            onClick={() => handleClickOnFriend(friend.username)}
           >
             <Image
               src={friend.imageUrl || userIcon}

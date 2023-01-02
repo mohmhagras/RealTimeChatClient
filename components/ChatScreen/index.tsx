@@ -9,9 +9,9 @@ import ChatBox from "./ChatBox";
 import NoChat from "./ChatBox/NoChat";
 export default function ChatScreen() {
   const [mode, setMode] = useState<number>(0); //0: chat, 1: friend requests
-  const [selectedChat, setSelectedChatChat] = useState<Chat>();
+  const [selectedChat, setSelectedChat] = useState<Chat>();
   useEffect(() => {
-    if (mode === 1) setSelectedChatChat(null);
+    if (mode === 1) setSelectedChat(null);
   }, [mode]);
   return (
     <div id={styles.chatscreen}>
@@ -21,7 +21,7 @@ export default function ChatScreen() {
       ) : (
         <ChatsSidebar
           selectedChat={selectedChat}
-          setSelectedChatChat={setSelectedChatChat}
+          setSelectedChat={setSelectedChat}
         />
       )}
       {selectedChat && !mode ? <ChatBox chatData={selectedChat} /> : <NoChat />}

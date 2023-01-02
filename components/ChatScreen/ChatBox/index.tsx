@@ -43,7 +43,11 @@ export default function ChatBox({ chatData }: { chatData: Chat }) {
   }, []);
 
   useEffect(() => {
-    lastMessageRef.current.scrollIntoView();
+    setChatMessages(chatData.messages);
+  }, [chatData]);
+
+  useEffect(() => {
+    if (chatMessages.length) lastMessageRef.current.scrollIntoView();
   }, [chatMessages]);
 
   return (

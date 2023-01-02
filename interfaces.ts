@@ -23,7 +23,7 @@ export interface Message {
 }
 
 export interface Chat {
-  id: string;
+  id?: string;
   usernames: Array<string>;
   messages: Array<Message>;
 }
