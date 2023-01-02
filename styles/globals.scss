@@ -61,6 +61,11 @@ h1 {
   align-items: center;
 }
 
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+}
+
 button {
   cursor: pointer;
   display: flex;

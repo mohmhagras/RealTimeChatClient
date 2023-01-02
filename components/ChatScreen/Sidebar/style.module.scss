@@ -70,4 +70,32 @@
     color: black;
     background-color: colors.$fourth;
   }
+  .chat-item {
+    padding: 16px;
+    margin-bottom: 16px;
+    &.-selected {
+      background-color: colors.$secondary;
+    }
+  }
+}
+
+#chats-sidebar {
+  background-color: colors.$fourth;
+  max-width: 320px;
+  padding: 0px;
+  .chat-item {
+    padding: 24px 16px;
+    cursor: pointer;
+    &.-selected {
+      background-color: colors.$secondary;
+    }
+    p {
+      display: block;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      overflow: hidden;
+      max-height: 1.8em;
+      line-height: 1.8em;
+    }
+  }
 }

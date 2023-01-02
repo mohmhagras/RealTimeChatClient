@@ -1,0 +1,49 @@
+@use "../../../styles/colors";
+#chat-box {
+  position: relative;
+  overflow-y: scroll;
+  width: calc(100% - 600px);
+  margin-bottom: 32px;
+  .message-from {
+    border-radius: 4px;
+    width: 260px;
+    padding: 8px;
+    font-size: 0.8rem;
+    margin: 24px 32px;
+    &.-user {
+      background-color: colors.$third;
+      align-self: flex-end;
+    }
+    &.-otherUser {
+      background-color: colors.$secondary;
+      align-self: flex-start;
+    }
+    .date {
+      font-size: 0.7rem;
+      text-align: right;
+      color: gray;
+    }
+  }
+  #text-box {
+    position: fixed;
+    bottom: 0px;
+    width: calc(100% - 600px);
+    input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-top: 1px solid colors.$primary;
+      border-radius: 0px;
+      z-index: 0;
+    }
+    button {
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      z-index: 10;
+      height: 41px;
+      padding: 0px 24px;
+      font-size: 0.8rem;
+    }
+  }
+}
