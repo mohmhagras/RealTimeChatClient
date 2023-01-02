@@ -3,13 +3,15 @@
   position: relative;
   overflow-y: scroll;
   width: calc(100% - 600px);
-  margin-bottom: 32px;
+  margin-bottom: 42px;
   .message-from {
     border-radius: 4px;
-    width: 260px;
-    padding: 8px;
+    width: fit-content;
+    min-width: 160px;
+    max-width: 260px;
+    padding: 12px;
     font-size: 0.8rem;
-    margin: 24px 32px;
+    margin: 12px 36px;
     &.-user {
       background-color: colors.$third;
       align-self: flex-end;
@@ -22,6 +24,8 @@
       font-size: 0.7rem;
       text-align: right;
       color: gray;
+      font-weight: 200;
+      margin-top: 4px;
     }
   }
   #text-box {
@@ -31,10 +35,12 @@
     input {
       width: 100%;
       padding: 12px;
+      height: 42px;
       border: none;
       border-top: 1px solid colors.$primary;
       border-radius: 0px;
       z-index: 0;
+      font-size: 0.8rem;
     }
     button {
       position: absolute;
@@ -44,6 +50,7 @@
       height: 41px;
       padding: 0px 24px;
       font-size: 0.8rem;
+      border-radius: 0px;
     }
   }
 }

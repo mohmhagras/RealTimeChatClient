@@ -11,6 +11,7 @@
   width: 100vw;
   height: 86px;
   padding: 8px 32px;
+  z-index: 10;
   button {
     background-color: colors.$primary;
     color: white;
@@ -31,14 +32,14 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    right: 0;
+    right: 32px;
     top: 100%;
     list-style-type: none;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     z-index: 10;
   }
   #user-options-menu li {
-    padding: 20px 40px;
+    padding: 18px 28px;
     cursor: pointer;
     display: flex;
     align-items: center;

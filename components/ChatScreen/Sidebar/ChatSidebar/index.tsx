@@ -24,7 +24,7 @@ export default function ChatsSidebar({ selectedChat, setSelectedChatChat }) {
 
   useEffect(() => {
     fetchChats();
-  }, []);
+  }, [selectedChat]);
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
       {chats?.map((chat, index) => {
@@ -48,12 +48,19 @@ export default function ChatsSidebar({ selectedChat, setSelectedChatChat }) {
             />
             <div className="vertical-left-aligned-container">
               <h3>{otherUser?.username}</h3>
-              <p>{` ${chat.messages[chat.messages.length - 1].text} `}</p>
+              <p>{`${
+                chat.messages[chat.messages.length - 1].fromUser ===
+                user?.username
+                  ? "You:"
+                  : ""
+              } ${chat.messages[chat.messages.length - 1].text} `}</p>
             </div>
           </div>
         );
       })}
-      {!chats?.length ? <h3>No chats yet.</h3> : null}
+      {!chats?.length ? (
+        <h3 style={{ padding: "24px 16px" }}>No chats yet.</h3>
+      ) : null}
     </aside>
   );
 }

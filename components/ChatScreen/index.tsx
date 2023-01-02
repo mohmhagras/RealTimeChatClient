@@ -6,12 +6,13 @@ import ChatsSidebar from "./Sidebar/ChatSidebar";
 import { Chat } from "../../interfaces";
 import { useEffect } from "react";
 import ChatBox from "./ChatBox";
+import NoChat from "./ChatBox/NoChat";
 export default function ChatScreen() {
   const [mode, setMode] = useState<number>(0); //0: chat, 1: friend requests
   const [selectedChat, setSelectedChatChat] = useState<Chat>();
   useEffect(() => {
-    console.log(selectedChat);
-  }, [selectedChat]);
+    if (mode === 1) setSelectedChatChat(null);
+  }, [mode]);
   return (
     <div id={styles.chatscreen}>
       <Sidebar mode={mode} setMode={setMode} />
@@ -23,7 +24,7 @@ export default function ChatScreen() {
           setSelectedChatChat={setSelectedChatChat}
         />
       )}
-      {selectedChat && !mode ? <ChatBox chatData={selectedChat} /> : null}
+      {selectedChat && !mode ? <ChatBox chatData={selectedChat} /> : <NoChat />}
     </div>
   );
 }

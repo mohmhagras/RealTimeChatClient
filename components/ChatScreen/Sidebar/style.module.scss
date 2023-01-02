@@ -70,13 +70,6 @@
     color: black;
     background-color: colors.$fourth;
   }
-  .chat-item {
-    padding: 16px;
-    margin-bottom: 16px;
-    &.-selected {
-      background-color: colors.$secondary;
-    }
-  }
 }
 
 #chats-sidebar {
