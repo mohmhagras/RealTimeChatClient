@@ -12,6 +12,7 @@ export default function UserContextProvider({
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User>(null);
   const [newChat, setNewChat] = useState<string>("");
+  const [existingChats, setExistingChats] = useState<Array<string>>([]);
   const getUserInfo = async () => {
     try {
       const response = await fetch("https://localhost:7298/api/User", {
@@ -69,7 +70,16 @@ export default function UserContextProvider({
 
   return (
     <userContext.Provider
-      value={{ token, setToken, isSignedIn, user, newChat, setNewChat }}
+      value={{
+        token,
+        setToken,
+        isSignedIn,
+        user,
+        newChat,
+        setNewChat,
+        existingChats,
+        setExistingChats,
+      }}
     >
       {children}
     </userContext.Provider>

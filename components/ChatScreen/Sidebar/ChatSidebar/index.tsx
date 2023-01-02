@@ -5,7 +5,8 @@ import { Chat, Message } from "../../../../interfaces";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
 export default function ChatsSidebar({ selectedChat, setSelectedChat }) {
-  const { token, user, newChat, setNewChat } = useContext(userContext);
+  const { token, user, newChat, setNewChat, setExistingChats } =
+    useContext(userContext);
   const newChatObject: Chat = {
     usernames: [newChat, user?.username],
     messages: [],
@@ -39,6 +40,16 @@ export default function ChatsSidebar({ selectedChat, setSelectedChat }) {
       setSelectedChat(newChatObject);
     }
   }, [newChat]);
+
+  useEffect(() => {
+    if (chats.length) {
+      setExistingChats([]);
+      chats.forEach(({ usernames }) => {
+        const otherUsername = usernames.find((name) => name != user?.username);
+        setExistingChats((prevState) => [...prevState, otherUsername]);
+      });
+    }
+  }, [chats]);
 
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
