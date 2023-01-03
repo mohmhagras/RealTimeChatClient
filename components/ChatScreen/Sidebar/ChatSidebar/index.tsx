@@ -4,52 +4,8 @@ import { userContext } from "../../../../Context/UserContext";
 import { Chat, Message } from "../../../../interfaces";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
-export default function ChatsSidebar({ selectedChat, setSelectedChat }) {
-  const { token, user, newChat, setNewChat, setExistingChats } =
-    useContext(userContext);
-  const newChatObject: Chat = {
-    usernames: [newChat, user?.username],
-    messages: [],
-  };
-  const [chats, setChats] = useState<Array<Chat>>([]);
-  const fetchChats = async () => {
-    if (!newChat.length) {
-      const response = await fetch("https://localhost:7298/api/User/getchats", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status >= 400) {
-        alert(await response.text());
-        return;
-      }
-      setChats(await response.json());
-    }
-    setNewChat("");
-  };
-
-  useEffect(() => {
-    fetchChats();
-  }, [selectedChat]);
-
-  useEffect(() => {
-    if (newChat?.length) {
-      setChats((prevState) => [...prevState, newChatObject]);
-      setSelectedChat(newChatObject);
-    }
-  }, [newChat]);
-
-  useEffect(() => {
-    if (chats.length) {
-      setExistingChats([]);
-      chats.forEach(({ usernames }) => {
-        const otherUsername = usernames.find((name) => name != user?.username);
-        setExistingChats((prevState) => [...prevState, otherUsername]);
-      });
-    }
-  }, [chats]);
+export default function ChatsSidebar({ selectedChat, setSelectedChat, chats }) {
+  const { user } = useContext(userContext);
 
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
@@ -72,9 +28,11 @@ export default function ChatsSidebar({ selectedChat, setSelectedChat }) {
           <div
             className={`horizontal-left-aligned-container ${
               styles["chat-item"]
-            } ${selectedChat?.id === chat.id ? styles["-selected"] : ""}`}
+            } ${
+              selectedChat === otherUser?.username ? styles["-selected"] : ""
+            }`}
             key={index}
-            onClick={() => setSelectedChat(chat)}
+            onClick={() => setSelectedChat(otherUser?.username)}
           >
             <Image
               src={otherUser?.imageUrl || userIcon}
