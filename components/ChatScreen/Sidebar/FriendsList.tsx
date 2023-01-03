@@ -11,12 +11,15 @@ export default function FriendsList({
   friends: Array<Friend>;
   setMode: any;
 }) {
-  const { setNewChat, existingChats } = useContext(userContext);
+  const { setNewChat, existingChats, setSelectedChat } =
+    useContext(userContext);
 
   const handleClickOnFriend = (username) => {
     setMode(0);
     if (!existingChats.includes(username)) {
       setNewChat(username);
+    } else {
+      setSelectedChat(username);
     }
   };
   return (

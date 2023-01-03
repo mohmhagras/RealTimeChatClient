@@ -13,6 +13,8 @@ export default function UserContextProvider({
   const [user, setUser] = useState<User>(null);
   const [newChat, setNewChat] = useState<string>("");
   const [existingChats, setExistingChats] = useState<Array<string>>([]);
+  const [selectedChat, setSelectedChat] = useState<string>(); //other username of selected chat
+
   const getUserInfo = async () => {
     try {
       const response = await fetch("https://localhost:7298/api/User", {
@@ -79,6 +81,8 @@ export default function UserContextProvider({
         setNewChat,
         existingChats,
         setExistingChats,
+        selectedChat,
+        setSelectedChat,
       }}
     >
       {children}

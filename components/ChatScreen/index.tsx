@@ -1,19 +1,36 @@
 import Sidebar from "./Sidebar";
 import styles from "./style.module.scss";
-import { useContext, useState, useEffect, useMemo } from "react";
+import { useContext, useState, useEffect, useMemo, ReactElement } from "react";
 import RequestsSidebar from "./Sidebar/RequestsSidebar";
 import ChatsSidebar from "./Sidebar/ChatSidebar";
 import { Chat, Message } from "../../interfaces";
 import ChatBox from "./ChatBox";
 import NoChat from "./ChatBox/NoChat";
 import { userContext } from "../../Context/UserContext";
+import viewport from "viewport-dimensions";
+
 const signalR = require("@microsoft/signalr");
 
 export default function ChatScreen() {
-  const { token, user, newChat, setNewChat, setExistingChats } =
-    useContext(userContext);
-  const [mode, setMode] = useState<number>(0); //0: chat, 1: friend requests
-  const [selectedChat, setSelectedChat] = useState<string>(); //other username of selected chat
+  const screenWidth = viewport.width();
+  const {
+    token,
+    user,
+    newChat,
+    setNewChat,
+    setExistingChats,
+    selectedChat,
+    setSelectedChat,
+  } = useContext(userContext);
+
+  /*
+  screen modes: (mobile)      -      (desktop)
+        0: first sidebar only        first sidebar only   
+        1: second sidebar: chats     first and second sidebar: chats
+        2: second sidebar: requests  first and second sidebar: requests 
+        3: chat box only             chat box only
+  */
+  const [mode, setMode] = useState<number>(0); //0: chat, 1: friend requests, 2: neither
   const [chats, setChats] = useState<Array<Chat>>([]);
   const [newMessages, setNewMessages] = useState([]);
   const newChatObject: Chat = {
@@ -66,6 +83,7 @@ export default function ChatScreen() {
     } catch (error) {
       console.log(error);
     }
+    console.log(viewport.width());
   }, []);
 
   const fetchChats = async () => {
@@ -107,29 +125,49 @@ export default function ChatScreen() {
     }
   }, [chats]);
 
-  useEffect(() => {
-    if (mode === 1) setSelectedChat(null);
-  }, [mode]);
+  const shouldRenderChatBox = (): boolean => {
+    if (screenWidth > 1000) {
+      return true;
+    } else if (screenWidth > 670 && !mode) {
+      return true;
+    } else if (mode === 3) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const shouldRenderFirstSidebar = (): boolean => {
+    if (!mode) {
+      return true;
+    } else if (screenWidth > 670 && mode < 3) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div id={styles.chatscreen}>
-      <Sidebar mode={mode} setMode={setMode} />
+      {shouldRenderFirstSidebar() ? (
+        <Sidebar mode={mode} setMode={setMode} />
+      ) : null}
       {mode ? (
-        <RequestsSidebar />
-      ) : (
-        <ChatsSidebar
-          selectedChat={selectedChat}
-          setSelectedChat={setSelectedChat}
-          chats={chats}
-        />
-      )}
-      {selectedChat && !mode ? (
+        mode === 1 ? (
+          <ChatsSidebar chats={chats} />
+        ) : mode === 2 ? (
+          <RequestsSidebar />
+        ) : null
+      ) : null}
+      {selectedChat && shouldRenderChatBox() ? (
         <ChatBox
           chatData={chats.find((chat) => chat.usernames.includes(selectedChat))}
           sendMessage={invokeSendMessage}
+          mode={mode}
         />
-      ) : (
-        <NoChat />
-      )}
+      ) : shouldRenderChatBox() ? (
+        <NoChat mode={mode} />
+      ) : null}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { ReactElement } from "react";
 import { MouseEventHandler } from "react";
 import { useState } from "react";
 import FriendRequest from "./FriendRequest";
+
 interface sidebarItems {
   outlineIcon: ReactElement;
   filledIcon: ReactElement;
@@ -23,7 +24,7 @@ export default function SidebarItem({
   onClick,
 }: {
   index: number;
-  isSelected: boolean;
+  isSelected?: boolean;
   numberOfFriends?: number;
   onClick?: MouseEventHandler;
 }) {
@@ -65,9 +66,7 @@ export default function SidebarItem({
     return (
       <div className="vertical-left-aligned-container">
         <div
-          className={`horizontal-distributed-container ${styles.item} ${
-            isSelected ? styles["-selected"] : ""
-          }`}
+          className={`horizontal-distributed-container ${styles.item}`}
           style={{ cursor: "default", marginBottom: 0 }}
         >
           {`${numberOfFriends} ${item.text}`}

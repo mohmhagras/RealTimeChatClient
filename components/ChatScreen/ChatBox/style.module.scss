@@ -1,8 +1,9 @@
 @use "../../../styles/colors";
-#chat-box {
+@import "../../../styles/mixins";
+
+.chat-box {
   position: relative;
   overflow-y: scroll;
-  width: calc(100% - 600px);
   margin-bottom: 42px;
   .message-from {
     border-radius: 4px;
@@ -28,10 +29,9 @@
       margin-top: 4px;
     }
   }
-  #text-box {
+  .text-box {
     position: fixed;
     bottom: 0px;
-    width: calc(100% - 600px);
     input {
       width: 100%;
       padding: 12px;
@@ -53,4 +53,14 @@
       border-radius: 0px;
     }
   }
+}
+
+.two-sidebars-width {
+  width: calc(100% - 600px);
+}
+.one-sidebar-width {
+  width: calc(100% - 280px);
+}
+.no-sidebar-width {
+  width: calc(100%);
 }

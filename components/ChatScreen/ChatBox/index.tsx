@@ -8,9 +8,11 @@ import { userContext } from "../../../Context/UserContext";
 export default function ChatBox({
   chatData,
   sendMessage,
+  mode,
 }: {
   chatData: Chat;
   sendMessage: Function;
+  mode: number;
 }) {
   const lastMessageRef = useRef<HTMLInputElement>();
   const { user } = useContext(userContext);
@@ -40,7 +42,15 @@ export default function ChatBox({
   });
 
   return (
-    <section className="vertical-container" id={styles["chat-box"]}>
+    <section
+      className={`vertical-container ${styles["chat-box"]} ${
+        mode
+          ? mode < 3
+            ? styles["two-sidebars-width"]
+            : styles["no-sidebars-width"]
+          : styles["one-sidebar-width"]
+      }`}
+    >
       {messages.map((msg, index) => {
         return (
           <MessageBox
@@ -52,7 +62,15 @@ export default function ChatBox({
           />
         );
       })}
-      <div id={styles["text-box"]}>
+      <div
+        className={`${styles["text-box"]} ${
+          mode
+            ? mode < 3
+              ? styles["two-sidebars-width"]
+              : styles["no-sidebars-width"]
+            : styles["one-sidebar-width"]
+        }`}
+      >
         <input
           type="text"
           placeholder="Type something..."

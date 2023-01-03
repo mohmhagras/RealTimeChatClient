@@ -4,8 +4,8 @@ import { userContext } from "../../../../Context/UserContext";
 import { Chat, Message } from "../../../../interfaces";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
-export default function ChatsSidebar({ selectedChat, setSelectedChat, chats }) {
-  const { user } = useContext(userContext);
+export default function ChatsSidebar({ chats }) {
+  const { user, selectedChat, setSelectedChat } = useContext(userContext);
 
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
