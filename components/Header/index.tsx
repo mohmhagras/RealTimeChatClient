@@ -19,6 +19,7 @@ export default function Header() {
           width={50}
           height={50}
           alt="logo"
+          onClick={() => router.push("/")}
         />
         <h1>Real Time Chat</h1>
       </div>
@@ -37,7 +38,10 @@ export default function Header() {
       {isMenuOpen ? (
         <ul
           id={styles["user-options-menu"]}
-          onClick={() => setIsMenuOpen(false)}
+          onClick={() => {
+            router.push("/changephoto");
+            setIsMenuOpen(false);
+          }}
         >
           <li>
             <MdInsertPhoto className="icon" />

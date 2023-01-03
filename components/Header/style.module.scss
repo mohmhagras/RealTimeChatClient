@@ -45,6 +45,9 @@
     align-items: center;
     font-size: 18px;
   }
+  img {
+    cursor: pointer;
+  }
   #user-options-menu li:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }

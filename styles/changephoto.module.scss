@@ -1,0 +1,22 @@
+@use "./colors";
+.form {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+  label {
+    font-size: 1rem;
+  }
+  input {
+    padding: 8px 8px;
+    width: 100%;
+    margin-bottom: 16px;
+    margin-top: 4px;
+  }
+  button {
+    width: 100%;
+    padding: 8px 0px;
+    font-size: 1rem;
+    background-color: colors.$third;
+    margin-bottom: 16px;
+  }
+}

@@ -2,7 +2,14 @@ import { Chat, Message } from "../../../interfaces";
 import styles from "./style.module.scss";
 import MessageBox from "./Message";
 import { FiSend } from "react-icons/fi";
-import { useEffect, useContext, useRef, useState, useMemo } from "react";
+import {
+  useEffect,
+  useContext,
+  useRef,
+  useState,
+  useMemo,
+  KeyboardEventHandler,
+} from "react";
 import { userContext } from "../../../Context/UserContext";
 import { useDeferredValue } from "react";
 const signalR = require("@microsoft/signalr");
@@ -29,11 +36,18 @@ export default function ChatBox({ chatData }: { chatData: Chat }) {
     connection.invoke("sendMessage", otherUsername, currentMessage);
     setCurrentMessage("");
   };
+  const handleKeyUp = (event) => {
+    if (event.key === "Enter") {
+      connection.invoke("sendMessage", otherUsername, currentMessage);
+      setCurrentMessage("");
+    }
+  };
 
   useEffect(() => {
     try {
       connection.on("sendMessage", (data: Message) => {
-        setChatMessages((prevState) => [...prevState, data]);
+        if (chatData.usernames.includes(data.fromUser))
+          setChatMessages((prevState) => [...prevState, data]);
       });
 
       connection.start();
@@ -69,6 +83,7 @@ export default function ChatBox({ chatData }: { chatData: Chat }) {
           placeholder="Type something..."
           value={currentMessage}
           onChange={(event) => setCurrentMessage(event.target.value)}
+          onKeyUp={handleKeyUp}
         />
         <button onClick={handleSendClick} disabled={currentMessage == ""}>
           <FiSend className="icon" />

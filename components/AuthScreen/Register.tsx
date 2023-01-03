@@ -52,7 +52,7 @@ export default function Register() {
       </div>
       <div className="vertical-left-aligned-container">
         <label>Profile picture</label>
-        <input type="file" placeholder="john31" ref={profilePicRef} />
+        <input type="file" ref={profilePicRef} />
       </div>
       <div className="vertical-left-aligned-container">
         <label>

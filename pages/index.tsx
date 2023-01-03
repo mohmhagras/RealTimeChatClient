@@ -6,7 +6,6 @@ import AuthScreen from "../components/AuthScreen";
 import ChatScreen from "../components/ChatScreen";
 import { userContext } from "../Context/UserContext";
 import Header from "../components/Header";
-import { useEffect } from "react";
 export default function Home() {
   const { isSignedIn } = useContext(userContext);
   return (
