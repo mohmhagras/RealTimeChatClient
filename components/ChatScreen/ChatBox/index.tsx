@@ -37,7 +37,7 @@ export default function ChatBox({
 
   useEffect(() => {
     if (lastMessageRef) {
-      lastMessageRef.current.scrollIntoView();
+      lastMessageRef.current?.scrollIntoView();
     }
   });
 
@@ -47,7 +47,7 @@ export default function ChatBox({
         mode
           ? mode < 3
             ? styles["two-sidebars-width"]
-            : styles["no-sidebars-width"]
+            : styles["no-sidebar-width"]
           : styles["one-sidebar-width"]
       }`}
     >
@@ -67,7 +67,7 @@ export default function ChatBox({
           mode
             ? mode < 3
               ? styles["two-sidebars-width"]
-              : styles["no-sidebars-width"]
+              : styles["no-sidebar-width"]
             : styles["one-sidebar-width"]
         }`}
       >

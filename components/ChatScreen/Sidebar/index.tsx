@@ -16,6 +16,9 @@ export default function Sidebar({
   return (
     <aside className={styles.sidebar}>
       <section>
+        <h3 className={styles.welcome}>
+          Welcome, <strong>{user?.username}</strong>
+        </h3>
         <SidebarItem
           index={0}
           isSelected={mode === 1}

@@ -1,8 +1,9 @@
 @use "../../../styles/colors";
+@import "../../../styles/mixins";
 .sidebar {
   width: 100%;
+  max-width: none;
   height: 100%;
-  max-width: 280px;
   border-right: 1px solid lightgray;
   position: relative;
   padding: 24px 16px;
@@ -53,10 +54,18 @@
     margin-left: 8px;
     font-size: 0.8rem;
   }
+  .welcome {
+    text-align: center;
+    margin-bottom: 12px;
+    margin-top: -12px;
+  }
+  @include mid-size() {
+    max-width: 280px;
+  }
 }
 #requests-sidebar {
   background-color: colors.$fourth;
-  max-width: 320px;
+  max-width: none;
   button {
     padding: 6px 18px;
     width: fit-content;
@@ -70,11 +79,14 @@
     color: black;
     background-color: colors.$fourth;
   }
+  @include mid-size() {
+    max-width: 320px;
+  }
 }
 
 #chats-sidebar {
   background-color: colors.$fourth;
-  max-width: 320px;
+  max-width: none;
   padding: 0px;
   .chat-item {
     padding: 24px 16px;
@@ -90,5 +102,8 @@
       max-height: 1.8em;
       line-height: 1.8em;
     }
+  }
+  @include mid-size() {
+    max-width: 320px;
   }
 }

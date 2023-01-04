@@ -75,7 +75,7 @@ export default function RequestsSidebar() {
               style={{ cursor: "default" }}
             >
               <Image
-                src={request.imageUrl || userIcon}
+                src={request.imageUrl === "" ? userIcon : request.imageUrl}
                 width={40}
                 height={40}
                 alt="logo"

@@ -28,7 +28,7 @@ export default function Register() {
       },
       body: JSON.stringify({
         username: usernameRef?.current?.value,
-        imageUrl: imgURL,
+        imageUrl: profilePicRef.current.files[0] ? imgURL : "",
         password: passRef?.current?.value,
       }),
     });

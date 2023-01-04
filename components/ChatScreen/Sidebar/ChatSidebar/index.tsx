@@ -1,12 +1,19 @@
 import styles from "../style.module.scss";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { userContext } from "../../../../Context/UserContext";
-import { Chat, Message } from "../../../../interfaces";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
-export default function ChatsSidebar({ chats }) {
+import viewport from "viewport-dimensions";
+
+export default function ChatsSidebar({ chats, setMode }) {
   const { user, selectedChat, setSelectedChat } = useContext(userContext);
 
+  function handleClickOnChat(username: string) {
+    setSelectedChat(username);
+    if (viewport.width() < 670) {
+      setMode(3);
+    }
+  }
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
       {chats?.map((chat, index) => {
@@ -32,7 +39,7 @@ export default function ChatsSidebar({ chats }) {
               selectedChat === otherUser?.username ? styles["-selected"] : ""
             }`}
             key={index}
-            onClick={() => setSelectedChat(otherUser?.username)}
+            onClick={() => handleClickOnChat(otherUser.username)}
           >
             <Image
               src={otherUser?.imageUrl || userIcon}

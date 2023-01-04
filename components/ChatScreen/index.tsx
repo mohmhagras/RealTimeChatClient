@@ -8,11 +8,12 @@ import ChatBox from "./ChatBox";
 import NoChat from "./ChatBox/NoChat";
 import { userContext } from "../../Context/UserContext";
 import viewport from "viewport-dimensions";
-
+import { useRouter } from "next/router";
 const signalR = require("@microsoft/signalr");
 
 export default function ChatScreen() {
   const screenWidth = viewport.width();
+  const router = useRouter();
   const {
     token,
     user,
@@ -54,9 +55,11 @@ export default function ChatScreen() {
     return;
   };
 
-  function saveMessage(message: Message, reciever: String) {
+  function saveMessage(message: Message, reciever: string) {
+    if (!chats.length) router.reload();
     const otherUsername: string =
-      message.fromUser === user.username ? reciever : user.username;
+      message.fromUser === user.username ? reciever : message.fromUser;
+    console.log(otherUsername);
     const chatsCopy: Array<Chat> = chats;
 
     const index = chats.findIndex((chat) =>
@@ -100,6 +103,7 @@ export default function ChatScreen() {
         return;
       }
       setChats(await response.json());
+      return;
     }
     setNewChat("");
   };
@@ -154,7 +158,7 @@ export default function ChatScreen() {
       ) : null}
       {mode ? (
         mode === 1 ? (
-          <ChatsSidebar chats={chats} />
+          <ChatsSidebar chats={chats} setMode={setMode} />
         ) : mode === 2 ? (
           <RequestsSidebar />
         ) : null

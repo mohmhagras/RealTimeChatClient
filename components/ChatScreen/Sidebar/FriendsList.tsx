@@ -4,6 +4,8 @@ import styles from "./style.module.scss";
 import userIcon from "../../../public/images/user-black.png";
 import { useContext } from "react";
 import { userContext } from "../../../Context/UserContext";
+import viewport from "viewport-dimensions";
+
 export default function FriendsList({
   friends,
   setMode,
@@ -15,7 +17,11 @@ export default function FriendsList({
     useContext(userContext);
 
   const handleClickOnFriend = (username) => {
-    setMode(0);
+    if (viewport.width() < 670) {
+      setMode(3);
+    } else {
+      setMode(1);
+    }
     if (!existingChats.includes(username)) {
       setNewChat(username);
     } else {
@@ -23,8 +29,9 @@ export default function FriendsList({
     }
   };
   return (
-    <div>
+    <div style={{ overflowY: "scroll" }}>
       {friends?.map((friend, index) => {
+        console.log(friend.imageUrl);
         return (
           <div
             className={`horizontal-left-aligned-container ${styles["friend-item"]}`}
@@ -32,7 +39,7 @@ export default function FriendsList({
             onClick={() => handleClickOnFriend(friend.username)}
           >
             <Image
-              src={friend.imageUrl || userIcon}
+              src={friend.imageUrl === "" ? userIcon : friend.imageUrl}
               width={35}
               height={35}
               alt="logo"
