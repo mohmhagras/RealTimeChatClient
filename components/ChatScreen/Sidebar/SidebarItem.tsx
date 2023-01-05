@@ -1,16 +1,12 @@
 import styles from "./style.module.scss";
-import {
-  BsChatSquareDots,
-  BsChatSquareDotsFill,
-  BsPlus,
-  BsX,
-} from "react-icons/bs";
+import { BsChatSquareDots, BsChatSquareDotsFill, BsPlus } from "react-icons/bs";
 import { HiUsers, HiOutlineUsers } from "react-icons/hi2";
 import { ReactElement } from "react";
 import { MouseEventHandler } from "react";
-import { useState } from "react";
-import FriendRequest from "./FriendRequest";
-
+import { useContext } from "react";
+import { chatScreenContext } from "../../../Contexts";
+import FriendRequest from "./Friends/FriendRequest";
+import { AnimatePresence, motion } from "framer-motion";
 interface sidebarItems {
   outlineIcon: ReactElement;
   filledIcon: ReactElement;
@@ -21,16 +17,17 @@ export default function SidebarItem({
   index,
   isSelected,
   numberOfFriends,
+  isTitle,
   onClick,
 }: {
   index: number;
   isSelected?: boolean;
+  isTitle?: boolean;
   numberOfFriends?: number;
   onClick?: MouseEventHandler;
 }) {
-  const [showFriendRequestBox, setShowFriendRequestBox] =
-    useState<boolean>(false);
-
+  const { showFriendRequestBox, setShowFriendRequestBox } =
+    useContext(chatScreenContext);
   const items: Array<sidebarItems> = [
     {
       text: "Chats",
@@ -45,18 +42,36 @@ export default function SidebarItem({
     {
       text: "Friends",
       outlineIcon: <BsPlus />,
-      filledIcon: showFriendRequestBox ? (
-        <BsX
-          fontSize={24}
-          className="icon-with-bg"
-          onClick={() => setShowFriendRequestBox(false)}
-        />
-      ) : (
-        <BsPlus
-          fontSize={24}
-          className="icon-with-bg"
-          onClick={() => setShowFriendRequestBox(true)}
-        />
+      filledIcon: (
+        <div className="icon-with-bg">
+          <motion.div
+            className="icon-wrapper"
+            animate={showFriendRequestBox ? "rotated" : "standard"}
+            variants={{
+              rotated: {
+                rotate: 45,
+                translateX: "-50%",
+                translateY: "-50%",
+                transition: {
+                  duration: 0.4,
+                },
+              },
+              standard: {
+                rotate: 0,
+                translateX: "-50%",
+                translateY: "-50%",
+                transition: {
+                  duration: 0.4,
+                },
+              },
+            }}
+          >
+            <BsPlus
+              fontSize={24}
+              onClick={() => setShowFriendRequestBox((prevState) => !prevState)}
+            />
+          </motion.div>
+        </div>
       ),
     },
   ];
@@ -67,23 +82,32 @@ export default function SidebarItem({
       <div className="vertical-left-aligned-container">
         <div
           className={`horizontal-distributed-container ${styles.item}`}
-          style={{ cursor: "default", marginBottom: 0 }}
+          style={{ cursor: "default", marginBottom: 0, paddingTop: 20 }}
         >
           {`${numberOfFriends} ${item.text}`}
           {item.filledIcon}
         </div>
-        <div className={styles["friend-item"]}>
-          {showFriendRequestBox ? (
-            <FriendRequest setShowFriendRequestBox={setShowFriendRequestBox} />
-          ) : null}
+        <div className={styles["friend-item"]} style={{ cursor: "default" }}>
+          <AnimatePresence>
+            {showFriendRequestBox ? (
+              <FriendRequest
+                setShowFriendRequestBox={setShowFriendRequestBox}
+              />
+            ) : null}
+          </AnimatePresence>
         </div>
       </div>
     );
 
   return (
     <div
-      className={`horizontal-left-aligned-container ${styles.item} ${
-        isSelected ? styles["-selected"] : ""
+      className={`${
+        isTitle
+          ? `horizontal-centered-container`
+          : `horizontal-left-aligned-container`
+      } 
+           ${styles.item} ${isSelected ? styles["-selected"] : ""} ${
+        isTitle ? styles[`colored-bg`] : ``
       }`}
       onClick={onClick}
     >

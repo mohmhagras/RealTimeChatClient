@@ -1,21 +1,26 @@
 import styles from "../style.module.scss";
 import { useContext } from "react";
-import { userContext } from "../../../../Context/UserContext";
+import { userContext, chatScreenContext } from "../../../../Contexts";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
 import viewport from "viewport-dimensions";
+import SidebarItem from "../SidebarItem";
 
-export default function ChatsSidebar({ chats, setMode }) {
-  const { user, selectedChat, setSelectedChat } = useContext(userContext);
+export default function ChatsSidebar({ chats }) {
+  const { user } = useContext(userContext);
+  const { selectedChat, setSelectedChat, setDisplayMode } =
+    useContext(chatScreenContext);
+  const screenWidth = viewport.width();
 
   function handleClickOnChat(username: string) {
     setSelectedChat(username);
-    if (viewport.width() < 670) {
-      setMode(3);
+    if (screenWidth < 670) {
+      setDisplayMode(3);
     }
   }
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
+      {screenWidth < 670 ? <SidebarItem index={0} isTitle={true} /> : null}
       {chats?.map((chat, index) => {
         const otherUser = user?.friends?.find(({ username }) => {
           return chat.usernames.includes(username);

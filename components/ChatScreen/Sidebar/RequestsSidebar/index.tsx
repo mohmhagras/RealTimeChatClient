@@ -1,6 +1,6 @@
 import styles from "../style.module.scss";
 import { useContext, useEffect, useState } from "react";
-import { userContext } from "../../../../Context/UserContext";
+import { userContext } from "../../../../Contexts";
 import { Friend, User } from "../../../../interfaces";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";

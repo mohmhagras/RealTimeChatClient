@@ -34,7 +34,7 @@ export default function Register() {
     });
 
     if (response.status >= 400) {
-      alert(response.statusText);
+      alert(await response.text());
       return;
     }
     await response.json();

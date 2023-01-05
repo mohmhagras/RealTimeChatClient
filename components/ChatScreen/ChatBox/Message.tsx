@@ -1,6 +1,6 @@
 import { Message } from "../../../interfaces";
 import { useContext } from "react";
-import { userContext } from "../../../Context/UserContext";
+import { userContext } from "../../../Contexts";
 import styles from "./style.module.scss";
 import { MutableRefObject } from "react";
 export default function MessageBox({

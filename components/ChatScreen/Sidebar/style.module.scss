@@ -13,21 +13,36 @@
     padding: 12px 16px;
     border-radius: 4px;
     width: 100%;
+    background-color: white;
     cursor: pointer;
     &.-selected {
       background-color: colors.$secondary;
     }
   }
+  .colored-bg {
+    padding-top: 24px;
+    background-color: colors.$fourth;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+
   section {
     width: 100%;
     border-bottom: 1px solid lightgray;
     padding-bottom: 8px;
-    margin-bottom: 8px;
+    background-color: white;
+  }
+  .friends-list {
+    overflow-y: scroll;
+    transition: all 400ms;
   }
   .friend-item {
     padding: 0px 16px;
     margin-bottom: 16px;
     cursor: pointer;
+    form {
+      position: relative;
+    }
     label,
     input,
     button {
@@ -42,6 +57,7 @@
     button {
       background-color: colors.$primary;
       color: white;
+      cursor: pointer;
     }
   }
 

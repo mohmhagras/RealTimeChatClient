@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
-import { useState, useContext } from "react";
-import styles from "../styles/Home.module.css";
+import { useContext } from "react";
 import AuthScreen from "../components/AuthScreen";
 import ChatScreen from "../components/ChatScreen";
-import { userContext } from "../Context/UserContext";
+import { userContext } from "../Contexts";
 import Header from "../components/Header";
+import { ChatScreenContextProvider } from "../Contexts";
+
 export default function Home() {
   const { isSignedIn } = useContext(userContext);
   return (
@@ -18,7 +18,13 @@ export default function Home() {
       </Head>
       {isSignedIn ? <Header /> : null}
       <main className={isSignedIn ? "withPadding" : ""}>
-        {isSignedIn ? <ChatScreen /> : <AuthScreen />}
+        {isSignedIn ? (
+          <ChatScreenContextProvider>
+            <ChatScreen />
+          </ChatScreenContextProvider>
+        ) : (
+          <AuthScreen />
+        )}
       </main>
     </>
   );

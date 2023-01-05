@@ -1,17 +1,12 @@
 import SidebarItem from "./SidebarItem";
 import styles from "./style.module.scss";
-import { useContext, useState } from "react";
-import { userContext } from "../../../Context/UserContext";
-import FriendsList from "./FriendsList";
-import { Dispatch, SetStateAction } from "react";
-export default function Sidebar({
-  mode,
-  setMode,
-}: {
-  mode: number;
-  setMode?: Dispatch<SetStateAction<number>>;
-}) {
+import { useContext } from "react";
+import { userContext, chatScreenContext } from "../../../Contexts";
+import FriendsList from "./Friends/FriendsList";
+
+export default function Sidebar() {
   const { user } = useContext(userContext);
+  const { displayMode, setDisplayMode } = useContext(chatScreenContext);
 
   return (
     <aside className={styles.sidebar}>
@@ -21,21 +16,21 @@ export default function Sidebar({
         </h3>
         <SidebarItem
           index={0}
-          isSelected={mode === 1}
+          isSelected={displayMode === 1}
           onClick={() => {
-            mode === 1 ? setMode(0) : setMode(1);
+            displayMode === 1 ? setDisplayMode(0) : setDisplayMode(1);
           }}
         />
         <SidebarItem
           index={1}
-          isSelected={mode === 2}
+          isSelected={displayMode === 2}
           onClick={() => {
-            mode === 2 ? setMode(0) : setMode(2);
+            displayMode === 2 ? setDisplayMode(0) : setDisplayMode(2);
           }}
         />
       </section>
       <SidebarItem index={2} numberOfFriends={user?.friends?.length || 0} />
-      <FriendsList friends={user?.friends} setMode={setMode} />
+      <FriendsList friends={user?.friends} />
     </aside>
   );
 }

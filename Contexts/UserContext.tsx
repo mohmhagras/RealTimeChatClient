@@ -11,9 +11,6 @@ export default function UserContextProvider({
   const [token, setToken] = useState<string>("");
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User>(null);
-  const [newChat, setNewChat] = useState<string>("");
-  const [existingChats, setExistingChats] = useState<Array<string>>([]);
-  const [selectedChat, setSelectedChat] = useState<string>(); //other username of selected chat
 
   const getUserInfo = async () => {
     try {
@@ -30,28 +27,6 @@ export default function UserContextProvider({
     }
   };
 
-  const createNewChat = async (otherUsername: string) => {
-    try {
-      const response = await fetch("https://localhost:7298/api/Chat", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          usernames: [user.username, otherUsername],
-          messages: [],
-        }),
-      });
-      if (response.status >= 400) {
-        alert(await response.text());
-        return;
-      }
-      return response.json();
-    } catch (error) {
-      alert(error);
-    }
-  };
   useEffect(() => {
     setToken(localStorage.getItem("token") || "");
   }, []);
@@ -64,12 +39,6 @@ export default function UserContextProvider({
     }
   }, [token]);
 
-  useEffect(() => {
-    if (newChat.length) {
-      createNewChat(newChat);
-    }
-  }, [newChat]);
-
   return (
     <userContext.Provider
       value={{
@@ -77,12 +46,6 @@ export default function UserContextProvider({
         setToken,
         isSignedIn,
         user,
-        newChat,
-        setNewChat,
-        existingChats,
-        setExistingChats,
-        selectedChat,
-        setSelectedChat,
       }}
     >
       {children}

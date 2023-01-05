@@ -1,10 +1,13 @@
 import styles from "./style.module.scss";
-export default function NoChat({ mode }: { mode: number }) {
+import { useContext } from "react";
+import { chatScreenContext } from "../../../Contexts";
+export default function NoChat() {
+  const { displayMode } = useContext(chatScreenContext);
   return (
     <section
       className={`vertical-center-aligned-container ${styles["chat-box"]} ${
-        mode
-          ? mode < 3
+        displayMode
+          ? displayMode < 3
             ? styles["two-sidebars-width"]
             : styles["no-sidebars-width"]
           : styles["one-sidebar-width"]

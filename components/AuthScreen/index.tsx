@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import Register from "./Register";
 import Login from "./Login";
 import styles from "./style.module.scss";
-import { userContext } from "../../Context/UserContext";
+import { userContext } from "../../Contexts";
 export default function AuthScreen() {
   const [mode, setMode] = useState(0);
   useEffect(() => {

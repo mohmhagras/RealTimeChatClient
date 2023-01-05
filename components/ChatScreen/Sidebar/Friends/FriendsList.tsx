@@ -1,26 +1,25 @@
-import { Friend } from "../../../interfaces";
+import { Friend } from "../../../../interfaces";
 import Image from "next/image";
 import styles from "./style.module.scss";
 import userIcon from "../../../public/images/user-black.png";
 import { useContext } from "react";
-import { userContext } from "../../../Context/UserContext";
+import { chatScreenContext } from "../../../../Contexts";
 import viewport from "viewport-dimensions";
-
-export default function FriendsList({
-  friends,
-  setMode,
-}: {
-  friends: Array<Friend>;
-  setMode: any;
-}) {
-  const { setNewChat, existingChats, setSelectedChat } =
-    useContext(userContext);
+import { motion } from "framer-motion";
+export default function FriendsList({ friends }: { friends: Array<Friend> }) {
+  const {
+    setNewChat,
+    existingChats,
+    setSelectedChat,
+    setDisplayMode,
+    showFriendRequestBox,
+  } = useContext(chatScreenContext);
 
   const handleClickOnFriend = (username) => {
     if (viewport.width() < 670) {
-      setMode(3);
+      setDisplayMode(3);
     } else {
-      setMode(1);
+      setDisplayMode(1);
     }
     if (!existingChats.includes(username)) {
       setNewChat(username);
@@ -29,9 +28,8 @@ export default function FriendsList({
     }
   };
   return (
-    <div style={{ overflowY: "scroll" }}>
+    <motion.div className={styles["friends-list"]}>
       {friends?.map((friend, index) => {
-        console.log(friend.imageUrl);
         return (
           <div
             className={`horizontal-left-aligned-container ${styles["friend-item"]}`}
@@ -49,6 +47,6 @@ export default function FriendsList({
           </div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }

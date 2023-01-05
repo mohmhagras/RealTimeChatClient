@@ -2,7 +2,7 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 import userIcon from "../../public/images/user.png";
 import { useContext } from "react";
-import { userContext } from "../../Context/UserContext";
+import { userContext } from "../../Contexts";
 import { useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { MdInsertPhoto } from "react-icons/md";
@@ -23,10 +23,6 @@ export default function Header() {
         />
         <h1>Real Time Chat</h1>
       </div>
-      {/* <button>
-        <FiLogIn className="icon" />
-        Login
-  </button>*/}
       <Image
         src={user?.imageUrl || userIcon}
         alt="user icon"

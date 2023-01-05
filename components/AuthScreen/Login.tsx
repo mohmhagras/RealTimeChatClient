@@ -1,6 +1,6 @@
 import { FiLogIn } from "react-icons/fi";
 import React, { useRef, useContext } from "react";
-import { userContext } from "../../Context/UserContext";
+import { userContext } from "../../Contexts";
 
 interface LoginResponse {
   token: string;
@@ -26,7 +26,7 @@ export default function Login() {
       });
 
       if (response.status === 400) {
-        alert(response.statusText);
+        alert(await response.text());
       } else {
         const data: LoginResponse = await response.json();
         setToken(data.token);

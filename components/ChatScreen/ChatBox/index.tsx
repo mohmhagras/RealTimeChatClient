@@ -3,19 +3,18 @@ import styles from "./style.module.scss";
 import MessageBox from "./Message";
 import { FiSend } from "react-icons/fi";
 import { useEffect, useContext, useRef, useState } from "react";
-import { userContext } from "../../../Context/UserContext";
+import { userContext, chatScreenContext } from "../../../Contexts";
 
 export default function ChatBox({
   chatData,
   sendMessage,
-  mode,
 }: {
   chatData: Chat;
   sendMessage: Function;
-  mode: number;
 }) {
   const lastMessageRef = useRef<HTMLInputElement>();
   const { user } = useContext(userContext);
+  const { displayMode } = useContext(chatScreenContext);
   const [currentMessage, setCurrentMessage] = useState("");
 
   const { messages, usernames } = chatData;
@@ -44,8 +43,8 @@ export default function ChatBox({
   return (
     <section
       className={`vertical-container ${styles["chat-box"]} ${
-        mode
-          ? mode < 3
+        displayMode
+          ? displayMode < 3
             ? styles["two-sidebars-width"]
             : styles["no-sidebar-width"]
           : styles["one-sidebar-width"]
@@ -64,8 +63,8 @@ export default function ChatBox({
       })}
       <div
         className={`${styles["text-box"]} ${
-          mode
-            ? mode < 3
+          displayMode
+            ? displayMode < 3
               ? styles["two-sidebars-width"]
               : styles["no-sidebar-width"]
             : styles["one-sidebar-width"]
