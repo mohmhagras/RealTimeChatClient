@@ -1,12 +1,15 @@
-import styles from "../style.module.scss";
+import styles from "../../Sidebars.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { userContext } from "../../../../Contexts";
 import { Friend, User } from "../../../../interfaces";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
 import { useRouter } from "next/router";
+import Title from "../Title";
+import viewport from "viewport-dimensions";
 export default function RequestsSidebar() {
   const router = useRouter();
+  const screenWidth = viewport.width();
   const { token, user } = useContext(userContext);
   const [requests, setRequests] = useState<Array<User>>();
   const countMutualFriends = (friends: Array<Friend>): number => {
@@ -62,18 +65,14 @@ export default function RequestsSidebar() {
 
   return (
     <aside className={styles.sidebar} id={styles["requests-sidebar"]}>
+      {screenWidth < 670 ? <Title index={1} /> : null}
       {requests?.map((request, index) => {
         return (
           <div
-            className={`vertical-left-aligned-container ${styles["friend-item"]}`}
+            className={`vertical-left-aligned-container ${styles["request-item"]}`}
             key={index}
-            style={{ marginBottom: "16px" }}
           >
-            <div
-              className={`horizontal-left-aligned-container`}
-              key={index}
-              style={{ cursor: "default" }}
-            >
+            <div className={`horizontal-left-aligned-container`} key={index}>
               <Image
                 src={request.imageUrl === "" ? userIcon : request.imageUrl}
                 width={40}
@@ -97,7 +96,11 @@ export default function RequestsSidebar() {
           </div>
         );
       })}
-      {!requests?.length ? <h3>No friend requests at the moment.</h3> : null}
+      {!requests?.length ? (
+        <h3 className={styles["request-item"]}>
+          No friend requests at the moment.
+        </h3>
+      ) : null}
     </aside>
   );
 }

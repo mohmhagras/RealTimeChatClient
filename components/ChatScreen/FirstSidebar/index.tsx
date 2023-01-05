@@ -1,8 +1,9 @@
 import SidebarItem from "./SidebarItem";
-import styles from "./style.module.scss";
+import styles from "../Sidebars.module.scss";
 import { useContext } from "react";
 import { userContext, chatScreenContext } from "../../../Contexts";
 import FriendsList from "./Friends/FriendsList";
+import FriendsTitle from "./Friends/FriendsTitle";
 
 export default function Sidebar() {
   const { user } = useContext(userContext);
@@ -29,7 +30,7 @@ export default function Sidebar() {
           }}
         />
       </section>
-      <SidebarItem index={2} numberOfFriends={user?.friends?.length || 0} />
+      <FriendsTitle numberOfFriends={user?.friends?.length || 0} />
       <FriendsList friends={user?.friends} />
     </aside>
   );

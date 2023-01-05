@@ -1,10 +1,10 @@
-import styles from "../style.module.scss";
+import styles from "../../Sidebars.module.scss";
 import { useContext } from "react";
 import { userContext, chatScreenContext } from "../../../../Contexts";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
 import viewport from "viewport-dimensions";
-import SidebarItem from "../SidebarItem";
+import Title from "../Title";
 
 export default function ChatsSidebar({ chats }) {
   const { user } = useContext(userContext);
@@ -20,7 +20,7 @@ export default function ChatsSidebar({ chats }) {
   }
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
-      {screenWidth < 670 ? <SidebarItem index={0} isTitle={true} /> : null}
+      {screenWidth < 670 ? <Title index={0} /> : null}
       {chats?.map((chat, index) => {
         const otherUser = user?.friends?.find(({ username }) => {
           return chat.usernames.includes(username);

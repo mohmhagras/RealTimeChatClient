@@ -1,7 +1,7 @@
 import { Friend } from "../../../../interfaces";
 import Image from "next/image";
-import styles from "./style.module.scss";
-import userIcon from "../../../public/images/user-black.png";
+import styles from "../../Sidebars.module.scss";
+import userIcon from "../../../../public/images/user-black.png";
 import { useContext } from "react";
 import { chatScreenContext } from "../../../../Contexts";
 import viewport from "viewport-dimensions";

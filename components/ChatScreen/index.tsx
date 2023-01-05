@@ -1,8 +1,8 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "./FirstSidebar";
 import styles from "./style.module.scss";
-import { useContext, useState, useEffect, useMemo, ReactElement } from "react";
-import RequestsSidebar from "./Sidebar/RequestsSidebar";
-import ChatsSidebar from "./Sidebar/ChatSidebar";
+import { useContext, useState, useEffect, useMemo } from "react";
+import RequestsSidebar from "./SecondSidebar/RequestsSidebar";
+import ChatsSidebar from "./SecondSidebar/ChatSidebar";
 import { Chat, Message } from "../../interfaces";
 import ChatBox from "./ChatBox";
 import NoChat from "./ChatBox/NoChat";

@@ -1,5 +1,5 @@
 import { FormEvent, useContext, useRef } from "react";
-import { userContext } from "../Context/UserContext";
+import { userContext } from "../Contexts";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Header from "../components/Header";

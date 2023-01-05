@@ -32,14 +32,13 @@ export default function Header() {
         onClick={() => setIsMenuOpen((prev) => !prev)}
       />
       {isMenuOpen ? (
-        <ul
-          id={styles["user-options-menu"]}
-          onClick={() => {
-            router.push("/changephoto");
-            setIsMenuOpen(false);
-          }}
-        >
-          <li>
+        <ul id={styles["user-options-menu"]}>
+          <li
+            onClick={() => {
+              router.push("/changephoto");
+              setIsMenuOpen(false);
+            }}
+          >
             <MdInsertPhoto className="icon" />
             New profile photo
           </li>

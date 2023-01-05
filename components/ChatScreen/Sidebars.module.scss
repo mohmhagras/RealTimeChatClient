@@ -1,5 +1,5 @@
-@use "../../../styles/colors";
-@import "../../../styles/mixins";
+@use "../../styles/colors";
+@import "../../styles/mixins";
 .sidebar {
   width: 100%;
   max-width: none;
@@ -19,11 +19,13 @@
       background-color: colors.$secondary;
     }
   }
-  .colored-bg {
+  .colored-bg-item {
+    font-size: 1.2rem;
+    font-weight: 600;
     padding-top: 24px;
     background-color: colors.$fourth;
     padding-bottom: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 8px;
   }
 
   section {
@@ -60,6 +62,18 @@
       cursor: pointer;
     }
   }
+  .request-item {
+    padding: 24px 16px;
+    button {
+      font-size: 0.8rem;
+      margin-top: 8px;
+      width: 100%;
+      padding: 6px 8px;
+      background-color: colors.$primary;
+      color: white;
+      cursor: pointer;
+    }
+  }
 
   h3 {
     font-size: 1rem;
@@ -74,6 +88,7 @@
     text-align: center;
     margin-bottom: 12px;
     margin-top: -12px;
+    font-size: 1.2rem;
   }
   @include mid-size() {
     max-width: 280px;
@@ -82,6 +97,7 @@
 #requests-sidebar {
   background-color: colors.$fourth;
   max-width: none;
+  padding: 0px;
   button {
     padding: 6px 18px;
     width: fit-content;

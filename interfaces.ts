@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 export interface Friend {
   username: string;
   imageUrl: string;
@@ -26,4 +27,10 @@ export interface Chat {
   id?: string;
   usernames: Array<string>;
   messages: Array<Message>;
+}
+
+export interface SidebarItem {
+  outlineIcon: ReactElement;
+  filledIcon: ReactElement;
+  text: string;
 }
