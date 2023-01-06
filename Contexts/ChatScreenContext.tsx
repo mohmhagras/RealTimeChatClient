@@ -55,6 +55,7 @@ export default function ChatScreenContextProvider({
       createNewChat(newChat);
     }
   }, [newChat]);
+
   return (
     <chatScreenContext.Provider
       value={{

@@ -53,6 +53,22 @@
       border-radius: 0px;
     }
   }
+  .title {
+    padding: 12px 16px;
+    background-color: colors.$fourth;
+    margin-bottom: 8px;
+    position: fixed;
+    top: 86px;
+    width: 100%;
+    h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-left: 4px;
+    }
+  }
+}
+.marginTop {
+  margin-top: 60px;
 }
 
 .two-sidebars-width {

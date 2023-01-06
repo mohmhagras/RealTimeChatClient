@@ -2,9 +2,10 @@ import { Chat, Message } from "../../../interfaces";
 import styles from "./style.module.scss";
 import MessageBox from "./Message";
 import { FiSend } from "react-icons/fi";
-import { useEffect, useContext, useRef, useState } from "react";
+import { useEffect, useContext, useRef, useState, useMemo } from "react";
 import { userContext, chatScreenContext } from "../../../Contexts";
-
+import Title from "./Title";
+import viewport from "viewport-dimensions";
 export default function ChatBox({
   chatData,
   sendMessage,
@@ -12,6 +13,7 @@ export default function ChatBox({
   chatData: Chat;
   sendMessage: Function;
 }) {
+  const screenWidth = viewport.width();
   const lastMessageRef = useRef<HTMLInputElement>();
   const { user } = useContext(userContext);
   const { displayMode } = useContext(chatScreenContext);
@@ -19,8 +21,14 @@ export default function ChatBox({
 
   const { messages, usernames } = chatData;
 
-  const otherUsername = usernames.find(
-    (username) => username !== user.username
+  const otherUsername = useMemo(
+    () => usernames.find((username) => username !== user.username),
+    [usernames]
+  );
+
+  const otherUser = useMemo(
+    () => user.friends.find(({ username }) => username === otherUsername),
+    [otherUsername]
   );
 
   const handleSendClick = () => {
@@ -48,8 +56,9 @@ export default function ChatBox({
             ? styles["two-sidebars-width"]
             : styles["no-sidebar-width"]
           : styles["one-sidebar-width"]
-      }`}
+      } ${screenWidth < 670 || !displayMode ? styles.marginTop : ""}`}
     >
+      {screenWidth < 670 || !displayMode ? <Title friend={otherUser} /> : null}
       {messages.map((msg, index) => {
         return (
           <MessageBox
