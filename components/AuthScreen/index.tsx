@@ -7,7 +7,7 @@ import { userContext } from "../../Contexts";
 export default function AuthScreen() {
   const [mode, setMode] = useState(0);
   useEffect(() => {
-    setMode(JSON.parse(localStorage.getItem("hasAccount")) || 1);
+    if (localStorage.getItem("hasAccount")) setMode(0);
   }, []);
   return (
     <section

@@ -154,6 +154,10 @@ h2 {
   display: inline-block;
   animation: rotation 1s linear infinite;
   margin-right: 8px;
+  &.black {
+    border: 2.25px solid colors.$primary;
+    border-bottom-color: transparent;
+  }
 }
 
 @keyframes rotation {
@@ -168,4 +172,5 @@ h2 {
 .error {
   margin-top: 4px;
   color: red !important;
+  margin-bottom: 8px;
 }

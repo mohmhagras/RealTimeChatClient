@@ -1,20 +1,28 @@
 import { FormEvent } from "react";
 import { IoCreateOutline } from "react-icons/io5";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { storage } from "../../config/Firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/router";
+import { RequestState } from "../../interfaces";
+import SubmitBox from "../SubmitBox";
 export default function Register() {
   const router = useRouter();
   const usernameRef = useRef<HTMLInputElement>(null);
   const profilePicRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const confirmPassRef = useRef<HTMLInputElement>(null);
-
+  const [loadingState, setLoadingState] = useState<RequestState>(
+    RequestState.NORMAL
+  );
+  const [errorText, setErrorText] = useState<string>("");
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setLoadingState(RequestState.LOADING);
     if (passRef.current.value !== confirmPassRef.current.value) {
-      alert("Passwords mismatch!");
+      setLoadingState(RequestState.FAILED);
+      setErrorText("Passwords mismatch!");
+      setTimeout(() => setLoadingState(RequestState.NORMAL), 2000);
       return;
     }
     const storageRef = ref(storage, `users/${usernameRef.current.value}`);
@@ -34,11 +42,13 @@ export default function Register() {
     });
 
     if (response.status >= 400) {
-      alert(await response.text());
+      setLoadingState(RequestState.FAILED);
+      setErrorText(await response.text());
       return;
     }
     await response.json();
     localStorage.setItem("hasAccount", JSON.stringify(true));
+    setLoadingState(RequestState.SUCCESS);
     router.reload();
   };
 
@@ -76,10 +86,16 @@ export default function Register() {
           ref={confirmPassRef}
         />
       </div>
-      <button type="submit">
-        <IoCreateOutline className="icon" />
-        Register
-      </button>
+      <SubmitBox
+        state={loadingState}
+        error={errorText}
+        defaultComponent={
+          <>
+            <IoCreateOutline className="icon" />
+            Register
+          </>
+        }
+      />
     </form>
   );
 }

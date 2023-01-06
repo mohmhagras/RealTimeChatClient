@@ -1,7 +1,9 @@
 import { FiLogIn } from "react-icons/fi";
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import { userContext } from "../../Contexts";
-
+import { RequestState } from "../../interfaces";
+import ErrorWarning from "../Errors";
+import SubmitBox from "../SubmitBox";
 interface LoginResponse {
   token: string;
 }
@@ -10,9 +12,13 @@ export default function Login() {
   const usernamRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const { setToken } = useContext(userContext);
-
+  const [loadingState, setLoadingState] = useState<RequestState>(
+    RequestState.NORMAL
+  );
+  const [errorText, setErrorText] = useState<string>("");
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoadingState(RequestState.LOADING);
     try {
       const response = await fetch("https://localhost:7298/api/Auth/login", {
         method: "POST",
@@ -26,13 +32,16 @@ export default function Login() {
       });
 
       if (response.status === 400) {
-        alert(await response.text());
+        setLoadingState(RequestState.FAILED);
+        setErrorText(await response.text());
+        setTimeout(() => setLoadingState(RequestState.NORMAL), 2000);
       } else {
+        setLoadingState(RequestState.SUCCESS);
         const data: LoginResponse = await response.json();
         setToken(data.token);
       }
     } catch (error) {
-      // alert(error);
+      alert(error);
     }
   };
 
@@ -55,10 +64,16 @@ export default function Login() {
           ref={passwordRef}
         />
       </div>
-      <button type="submit">
-        <FiLogIn className="icon" />
-        Login
-      </button>
+      <SubmitBox
+        state={loadingState}
+        error={errorText}
+        defaultComponent={
+          <>
+            <FiLogIn className="icon" />
+            Login
+          </>
+        }
+      />
     </form>
   );
 }
