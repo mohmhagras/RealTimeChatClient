@@ -82,13 +82,16 @@ export default function ChatScreen() {
 
   const fetchChats = async () => {
     if (!newChat.length) {
-      const response = await fetch("https://localhost:7298/api/User/getchats", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://localhost:7298/api/Chat/getuserchats",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.status >= 400) {
         alert(await response.text());
         return;

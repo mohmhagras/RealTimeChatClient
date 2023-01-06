@@ -21,13 +21,14 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
     setLoadingState(RequestState.LOADING);
     try {
       const response = await fetch(
-        `https://localhost:7298/api/User/sendrequest/${usernameRef.current.value}`,
+        `https://localhost:7298/api/User/sendrequest`,
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
+          body: `"${usernameRef.current.value}"`,
         }
       );
       if (response.status >= 400) {

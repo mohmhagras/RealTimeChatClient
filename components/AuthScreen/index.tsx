@@ -3,12 +3,13 @@ import { useEffect, useState, useContext } from "react";
 import Register from "./Register";
 import Login from "./Login";
 import styles from "./style.module.scss";
-import { userContext } from "../../Contexts";
 export default function AuthScreen() {
   const [mode, setMode] = useState(0);
+
   useEffect(() => {
     if (localStorage.getItem("hasAccount")) setMode(0);
   }, []);
+
   return (
     <section
       id={styles.authscreen}
@@ -21,6 +22,7 @@ export default function AuthScreen() {
         height={150}
       />
       <h1>Start chatting now!</h1>
+
       {mode ? <Register /> : <Login />}
       {mode ? (
         <p onClick={() => setMode(0)}>Login instead</p>

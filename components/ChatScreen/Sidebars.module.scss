@@ -6,6 +6,7 @@
   height: 100%;
   border-right: 1px solid lightgray;
   position: relative;
+  overflow-y: scroll;
   padding: 24px 16px;
   .item {
     margin-bottom: 8px;
@@ -35,7 +36,6 @@
     background-color: white;
   }
   .friends-list {
-    overflow-y: scroll;
     transition: all 400ms;
   }
   .friend-item {

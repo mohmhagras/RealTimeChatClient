@@ -30,8 +30,10 @@ export default function Sidebar() {
           }}
         />
       </section>
-      <FriendsTitle numberOfFriends={user?.friends?.length || 0} />
-      <FriendsList friends={user?.friends} />
+      <div>
+        <FriendsTitle numberOfFriends={user?.friends?.length || 0} />
+        <FriendsList friends={user?.friends} />
+      </div>
     </aside>
   );
 }
