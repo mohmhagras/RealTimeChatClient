@@ -1,11 +1,16 @@
 import { FormEvent, useRef, useContext, useEffect, useState } from "react";
 import { userContext } from "../../../../Contexts";
 import { motion } from "framer-motion";
+import { RequestState } from "../../../../interfaces";
+import ErrorWarning from "../../../Errors";
 export default function FriendRequest({ setShowFriendRequestBox }) {
   const { token } = useContext(userContext);
   const usernameRef = useRef<HTMLInputElement>();
   const [isFormAccessible, setIsFormAccessibile] = useState<boolean>(false);
-
+  const [loadingState, setLoadingState] = useState<RequestState>(
+    RequestState.NORMAL
+  );
+  const [errorText, setErrorText] = useState<string>("");
   useEffect(() => {
     setTimeout(() => {
       setIsFormAccessibile(true);
@@ -13,6 +18,7 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
   }, []);
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setLoadingState(RequestState.LOADING);
     try {
       const response = await fetch(
         `https://localhost:7298/api/User/sendrequest/${usernameRef.current.value}`,
@@ -25,11 +31,20 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
         }
       );
       if (response.status >= 400) {
-        alert(await response.text());
+        setLoadingState(RequestState.FAILED);
+        setErrorText(await response.text());
+        //alert(await response.text());
+        setTimeout(() => {
+          setLoadingState(RequestState.NORMAL);
+        }, 3000);
         return;
       } else {
-        alert("Request Sent!");
-        setShowFriendRequestBox(false);
+        //alert("Request Sent!");
+        setLoadingState(RequestState.SUCCESS);
+        setTimeout(() => {
+          setLoadingState(RequestState.NORMAL);
+          setShowFriendRequestBox(false);
+        }, 1000);
       }
     } catch (error) {
       alert(error);
@@ -72,7 +87,21 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
     >
       <label>Add a friend by typing their username</label>
       <input type="text" required placeholder="john31" ref={usernameRef} />
-      <button type="submit">Send Request</button>
+      <button type="submit">
+        {!loadingState ? (
+          "Send Request"
+        ) : loadingState === 1 ? (
+          <>
+            <div className="loader"></div>
+            Sending...
+          </>
+        ) : loadingState === 2 ? (
+          "Sent!"
+        ) : (
+          "Failed!"
+        )}
+      </button>
+      {loadingState === 3 ? <ErrorWarning errorText={errorText} /> : null}
     </motion.form>
   );
 }

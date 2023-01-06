@@ -6,12 +6,16 @@ import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
 import { useRouter } from "next/router";
 import Title from "../Title";
+import { RequestState } from "../../../../interfaces";
 import viewport from "viewport-dimensions";
 export default function RequestsSidebar() {
   const router = useRouter();
   const screenWidth = viewport.width();
   const { token, user } = useContext(userContext);
   const [requests, setRequests] = useState<Array<User>>();
+  const [loadingState, setLoadingState] = useState<RequestState>(
+    RequestState.NORMAL
+  );
   const countMutualFriends = (friends: Array<Friend>): number => {
     let count = 0;
     console.log(friends);

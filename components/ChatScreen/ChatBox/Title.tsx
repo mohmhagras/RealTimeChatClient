@@ -6,12 +6,19 @@ import { chatScreenContext } from "../../../Contexts";
 import { Friend } from "../../../interfaces";
 import userIcon from "../../../public/images/user-black.png";
 export default function Title({ friend }: { friend: Friend }) {
-  const { setDisplayMode, setSelectedChat } = useContext(chatScreenContext);
+  const { setDisplayMode, setSelectedChat, displayMode } =
+    useContext(chatScreenContext);
   return (
     <div
       className={`
            horizontal-container
-           ${styles.title}`}
+           ${styles.title} ${
+        displayMode
+          ? displayMode < 3
+            ? styles["two-sidebars-width"]
+            : styles["no-sidebar-width"]
+          : styles["one-sidebar-width"]
+      }`}
     >
       <IoIosArrowBack
         className="icon-with-bg"

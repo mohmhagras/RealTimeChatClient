@@ -56,7 +56,7 @@ export default function ChatBox({
             ? styles["two-sidebars-width"]
             : styles["no-sidebar-width"]
           : styles["one-sidebar-width"]
-      } ${screenWidth < 670 || !displayMode ? styles.marginTop : ""}`}
+      } ${screenWidth < 670 || !displayMode ? styles["title-bar-exists"] : ""}`}
     >
       {screenWidth < 670 || !displayMode ? <Title friend={otherUser} /> : null}
       {messages.map((msg, index) => {

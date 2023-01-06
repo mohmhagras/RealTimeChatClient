@@ -144,3 +144,28 @@ h2 {
   color: colors.$primary;
   text-align: center;
 }
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 2.25px solid colors.$fourth;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  margin-top: 4px;
+  color: red !important;
+}

@@ -34,3 +34,10 @@ export interface SidebarItem {
   filledIcon: ReactElement;
   text: string;
 }
+
+export enum RequestState {
+  NORMAL,
+  LOADING,
+  SUCCESS,
+  FAILED,
+}
