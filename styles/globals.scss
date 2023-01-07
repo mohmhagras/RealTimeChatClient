@@ -158,14 +158,26 @@ h2 {
     border: 2.25px solid colors.$primary;
     border-bottom-color: transparent;
   }
+  &.page {
+    width: 48px;
+    height: 48px;
+    border-bottom-color: colors.$primary;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    bottom: 50%;
+    margin-right: 0px;
+  }
 }
 
 @keyframes rotation {
   0% {
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 

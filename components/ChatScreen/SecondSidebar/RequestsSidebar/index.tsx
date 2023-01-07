@@ -16,6 +16,7 @@ export default function RequestsSidebar() {
   const [loadingState, setLoadingState] = useState<RequestState>(
     RequestState.NORMAL
   );
+  const [isFetchingRequests, setIsFetchingRequests] = useState<boolean>(true);
   const countMutualFriends = (friends: Array<Friend>): number => {
     let count = 0;
     console.log(friends);
@@ -39,6 +40,7 @@ export default function RequestsSidebar() {
         }
       );
       setRequests(await response.json());
+      setIsFetchingRequests(false);
     } catch (error) {
       alert(error);
     }
@@ -49,6 +51,7 @@ export default function RequestsSidebar() {
   }, []);
 
   const acceptRequest = async (acceptedUser: User) => {
+    setLoadingState(RequestState.LOADING);
     try {
       await fetch(`https://localhost:7298/api/User/acceptrequest`, {
         method: "PUT",
@@ -93,14 +96,20 @@ export default function RequestsSidebar() {
             </div>
             <div className={`horizontal-right-aligned-container`}>
               <button id={styles.accept} onClick={() => acceptRequest(request)}>
-                Accept
+                {!loadingState ? (
+                  "Accept"
+                ) : (
+                  <div className="loader black"></div>
+                )}
               </button>
               <button id={styles.ignore}>Ignore</button>
             </div>
           </div>
         );
       })}
-      {!requests?.length ? (
+      {isFetchingRequests ? (
+        <div className="loader page"></div>
+      ) : !requests?.length ? (
         <h3 className={styles["request-item"]}>
           No friend requests at the moment.
         </h3>

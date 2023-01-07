@@ -43,8 +43,13 @@ export default function ChatScreen() {
     otherUsername: string,
     currentMessage: Message
   ) => {
-    connection.invoke("SendMessage", otherUsername, currentMessage);
-    return;
+    try {
+      connection.invoke("SendMessage", otherUsername, currentMessage);
+      return;
+    } catch (error) {
+      alert(error);
+      router.reload();
+    }
   };
 
   function saveMessage(message: Message, reciever: string) {
@@ -73,14 +78,13 @@ export default function ChatScreen() {
       connection.on("receiveMessage", (message: Message, reciever: String) =>
         setNewMessages((prevState) => [...prevState, { message, reciever }])
       );
-
       connection.start();
     } catch (error) {
       console.log(error);
     }
   }, []);
 
-  const fetchChats = async () => {
+  async function fetchChats() {
     if (!newChat.length) {
       const response = await fetch(
         "https://localhost:7298/api/Chat/getuserchats",
@@ -100,7 +104,7 @@ export default function ChatScreen() {
       return;
     }
     setNewChat("");
-  };
+  }
 
   useEffect(() => {
     fetchChats();
