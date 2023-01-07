@@ -3,10 +3,11 @@ import { useContext } from "react";
 import { userContext, chatScreenContext } from "../../../../Contexts";
 import Image from "next/image";
 import userIcon from "../../../../public/images/user-black.png";
-import viewport from "viewport-dimensions";
 import Title from "../Title";
+import { Chat } from "../../../../interfaces";
+const viewport = require("viewport-dimensions");
 
-export default function ChatsSidebar({ chats }) {
+export default function ChatsSidebar({ chats }: { chats: Chat[] }) {
   const { user } = useContext(userContext);
   const { selectedChat, setSelectedChat, setDisplayMode } =
     useContext(chatScreenContext);
@@ -21,10 +22,12 @@ export default function ChatsSidebar({ chats }) {
   return (
     <aside className={styles.sidebar} id={styles["chats-sidebar"]}>
       {screenWidth < 670 ? <Title index={0} /> : null}
-      {chats?.map((chat, index) => {
-        const otherUser = user?.friends?.find(({ username }) => {
-          return chat.usernames.includes(username);
-        });
+      {chats?.map((chat: Chat, index: number) => {
+        const otherUser = user?.friends?.find(
+          ({ username }: { username: string }) => {
+            return chat.usernames.includes(username);
+          }
+        );
 
         const secondLineText = (): string => {
           const messagesLength = chat.messages.length;
@@ -44,7 +47,7 @@ export default function ChatsSidebar({ chats }) {
               selectedChat === otherUser?.username ? styles["-selected"] : ""
             }`}
             key={index}
-            onClick={() => handleClickOnChat(otherUser.username)}
+            onClick={() => handleClickOnChat(otherUser?.username!)}
           >
             <Image
               src={otherUser?.imageUrl || userIcon}

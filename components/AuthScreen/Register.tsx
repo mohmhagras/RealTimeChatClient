@@ -19,14 +19,14 @@ export default function Register() {
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setLoadingState(RequestState.LOADING);
-    if (passRef.current.value !== confirmPassRef.current.value) {
+    if (passRef?.current?.value !== confirmPassRef?.current?.value) {
       setLoadingState(RequestState.FAILED);
       setErrorText("Passwords mismatch!");
       setTimeout(() => setLoadingState(RequestState.NORMAL), 2000);
       return;
     }
-    const storageRef = ref(storage, `users/${usernameRef.current.value}`);
-    await uploadBytes(storageRef, profilePicRef.current.files[0]);
+    const storageRef = ref(storage, `users/${usernameRef?.current?.value}`);
+    await uploadBytes(storageRef, profilePicRef?.current?.files[0]!);
     const imgURL = await getDownloadURL(storageRef);
 
     const response = await fetch("https://localhost:7298/api/Auth/register", {
@@ -36,7 +36,7 @@ export default function Register() {
       },
       body: JSON.stringify({
         username: usernameRef?.current?.value,
-        imageUrl: profilePicRef.current.files[0] ? imgURL : "",
+        imageUrl: profilePicRef?.current?.files[0] ? imgURL : "",
         password: passRef?.current?.value,
       }),
     });

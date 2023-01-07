@@ -1,9 +1,21 @@
-import { FormEvent, useRef, useContext, useEffect, useState } from "react";
+import {
+  FormEvent,
+  useRef,
+  useContext,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { userContext } from "../../../../Contexts";
 import { motion } from "framer-motion";
 import { RequestState } from "../../../../interfaces";
 import ErrorWarning from "../../../Errors";
-export default function FriendRequest({ setShowFriendRequestBox }) {
+export default function FriendRequest({
+  setShowFriendRequestBox,
+}: {
+  setShowFriendRequestBox: Dispatch<SetStateAction<boolean>>;
+}) {
   const { token } = useContext(userContext);
   const usernameRef = useRef<HTMLInputElement>();
   const [isFormAccessible, setIsFormAccessibile] = useState<boolean>(false);
@@ -28,19 +40,17 @@ export default function FriendRequest({ setShowFriendRequestBox }) {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: `"${usernameRef.current.value}"`,
+          body: `"${usernameRef?.current?.value}"`,
         }
       );
       if (response.status >= 400) {
         setLoadingState(RequestState.FAILED);
         setErrorText(await response.text());
-        //alert(await response.text());
         setTimeout(() => {
           setLoadingState(RequestState.NORMAL);
         }, 3000);
         return;
       } else {
-        //alert("Request Sent!");
         setLoadingState(RequestState.SUCCESS);
         setTimeout(() => {
           setLoadingState(RequestState.NORMAL);

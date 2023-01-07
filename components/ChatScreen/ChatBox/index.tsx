@@ -5,7 +5,8 @@ import { FiSend } from "react-icons/fi";
 import { useEffect, useContext, useRef, useState, useMemo } from "react";
 import { userContext, chatScreenContext } from "../../../Contexts";
 import Title from "./Title";
-import viewport from "viewport-dimensions";
+const viewport = require("viewport-dimensions");
+
 export default function ChatBox({
   chatData,
   sendMessage,
@@ -22,12 +23,12 @@ export default function ChatBox({
   const { messages, usernames } = chatData;
 
   const otherUsername = useMemo(
-    () => usernames.find((username) => username !== user.username),
+    () => usernames.find((username) => username !== user?.username),
     [usernames]
   );
 
   const otherUser = useMemo(
-    () => user.friends.find(({ username }) => username === otherUsername),
+    () => user?.friends.find(({ username }) => username === otherUsername),
     [otherUsername]
   );
 
@@ -35,7 +36,7 @@ export default function ChatBox({
     sendMessage(otherUsername, currentMessage);
     setCurrentMessage("");
   };
-  const handleKeyUp = (event) => {
+  const handleKeyUp = (event: any) => {
     if (event.key === "Enter") {
       sendMessage(otherUsername, currentMessage);
       setCurrentMessage("");
@@ -58,7 +59,7 @@ export default function ChatBox({
           : styles["one-sidebar-width"]
       } ${screenWidth < 670 || !displayMode ? styles["title-bar-exists"] : ""}`}
     >
-      {screenWidth < 670 || !displayMode ? <Title friend={otherUser} /> : null}
+      {screenWidth < 670 || !displayMode ? <Title friend={otherUser!} /> : null}
       {messages.map((msg, index) => {
         return (
           <MessageBox

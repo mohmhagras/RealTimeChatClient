@@ -21,7 +21,7 @@ export default function SubmitBox({
     );
   } else if (state === 2) {
     return <button type="submit">Registered!</button>;
-  } else if (state === 3) {
+  } else {
     return (
       <>
         <button type="submit">Failed!</button>

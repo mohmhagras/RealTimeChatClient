@@ -3,10 +3,13 @@ import { BsChatSquareDots, BsChatSquareDotsFill } from "react-icons/bs";
 import { HiUsers, HiOutlineUsers } from "react-icons/hi2";
 import { IoIosArrowBack } from "react-icons/io";
 import { SidebarItem } from "../../../interfaces";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { chatScreenContext } from "../../../Contexts";
 export default function Title({ index }: { index: number }) {
-  const { setDisplayMode } = useContext(chatScreenContext);
+  const {
+    setDisplayMode,
+  }: { setDisplayMode: Dispatch<SetStateAction<number>> } =
+    useContext(chatScreenContext);
   const items: Array<SidebarItem> = [
     {
       text: "Chats",

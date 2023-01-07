@@ -4,18 +4,14 @@ import styles from "../../Sidebars.module.scss";
 import userIcon from "../../../../public/images/user-black.png";
 import { useContext } from "react";
 import { chatScreenContext } from "../../../../Contexts";
-import viewport from "viewport-dimensions";
 import { motion } from "framer-motion";
-export default function FriendsList({ friends }: { friends: Array<Friend> }) {
-  const {
-    setNewChat,
-    existingChats,
-    setSelectedChat,
-    setDisplayMode,
-    showFriendRequestBox,
-  } = useContext(chatScreenContext);
+const viewport = require("viewport-dimensions");
 
-  const handleClickOnFriend = (username) => {
+export default function FriendsList({ friends }: { friends: Array<Friend> }) {
+  const { setNewChat, existingChats, setSelectedChat, setDisplayMode } =
+    useContext(chatScreenContext);
+
+  const handleClickOnFriend = (username: string) => {
     if (viewport.width() < 670) {
       setDisplayMode(3);
     } else {

@@ -7,21 +7,21 @@ import userIcon from "../../../../public/images/user-black.png";
 import { useRouter } from "next/router";
 import Title from "../Title";
 import { RequestState } from "../../../../interfaces";
-import viewport from "viewport-dimensions";
+const viewport = require("viewport-dimensions");
+
 export default function RequestsSidebar() {
   const router = useRouter();
   const screenWidth = viewport.width();
   const { token, user } = useContext(userContext);
-  const [requests, setRequests] = useState<Array<User>>();
+  const [requests, setRequests] = useState<Array<User>>([]);
   const [loadingState, setLoadingState] = useState<RequestState>(
     RequestState.NORMAL
   );
   const [isFetchingRequests, setIsFetchingRequests] = useState<boolean>(true);
   const countMutualFriends = (friends: Array<Friend>): number => {
     let count = 0;
-    console.log(friends);
     friends.forEach(({ username }) => {
-      user.friends.forEach((friend) => {
+      user?.friends.forEach((friend) => {
         if (username === friend.username) count++;
       });
     });

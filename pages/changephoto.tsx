@@ -8,12 +8,12 @@ import { storage } from "../config/Firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default function ChangePhoto() {
   const router = useRouter();
-  const profilePicRef = useRef<HTMLInputElement>();
+  const profilePicRef = useRef<HTMLInputElement>(null);
   const { isSignedIn, user, token } = useContext(userContext);
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const storageRef = ref(storage, `users/${user.username}`);
+    const storageRef = ref(storage, `users/${user?.username}`);
     await uploadBytes(storageRef, profilePicRef.current.files[0]);
     const imgURL = await getDownloadURL(storageRef);
 

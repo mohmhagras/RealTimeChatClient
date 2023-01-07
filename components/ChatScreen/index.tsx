@@ -7,9 +7,14 @@ import { Chat, Message } from "../../interfaces";
 import ChatBox from "./ChatBox";
 import NoChat from "./ChatBox/NoChat";
 import { userContext, chatScreenContext } from "../../Contexts";
-import viewport from "viewport-dimensions";
 import { useRouter } from "next/router";
 const signalR = require("@microsoft/signalr");
+const viewport = require("viewport-dimensions");
+
+interface NewMessage {
+  message: Message;
+  reciever: string;
+}
 
 export default function ChatScreen() {
   const screenWidth = viewport.width();
@@ -23,11 +28,10 @@ export default function ChatScreen() {
     setSelectedChat,
     displayMode,
   } = useContext(chatScreenContext);
-
   const [chats, setChats] = useState<Array<Chat>>([]);
-  const [newMessages, setNewMessages] = useState([]);
+  const [newMessages, setNewMessages] = useState<Array<NewMessage>>([]);
   const newChatObject: Chat = {
-    usernames: [newChat, user?.username],
+    usernames: [newChat, user?.username!],
     messages: [],
   };
 
@@ -55,7 +59,7 @@ export default function ChatScreen() {
   function saveMessage(message: Message, reciever: string) {
     if (!chats.length) router.reload();
     const otherUsername: string =
-      message.fromUser === user.username ? reciever : message.fromUser;
+      message.fromUser === user?.username ? reciever : message.fromUser;
     console.log(otherUsername);
     const chatsCopy: Array<Chat> = chats;
 
@@ -75,7 +79,7 @@ export default function ChatScreen() {
 
   useEffect(() => {
     try {
-      connection.on("receiveMessage", (message: Message, reciever: String) =>
+      connection.on("receiveMessage", (message: Message, reciever: string) =>
         setNewMessages((prevState) => [...prevState, { message, reciever }])
       );
       connection.start();
@@ -161,7 +165,9 @@ export default function ChatScreen() {
       ) : null}
       {selectedChat && shouldRenderChatBox() ? (
         <ChatBox
-          chatData={chats.find((chat) => chat.usernames.includes(selectedChat))}
+          chatData={
+            chats.find((chat) => chat.usernames.includes(selectedChat)) as Chat
+          }
           sendMessage={invokeSendMessage}
         />
       ) : shouldRenderChatBox() ? (

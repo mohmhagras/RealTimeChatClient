@@ -1,7 +1,23 @@
-import { useDeferredValue } from "react";
-import { createContext, ReactNode, useState, useEffect } from "react";
-import { User, Friend, Chat } from "../interfaces";
-export const userContext = createContext(null);
+import {
+  createContext,
+  ReactNode,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { User } from "../interfaces";
+
+interface UserContextInterface {
+  token: string;
+  setToken: Dispatch<SetStateAction<string>>;
+  isSignedIn: boolean;
+  user: User | null;
+}
+
+export const userContext = createContext<UserContextInterface>(
+  {} as UserContextInterface
+);
 
 export default function UserContextProvider({
   children,
@@ -10,7 +26,7 @@ export default function UserContextProvider({
 }) {
   const [token, setToken] = useState<string>("");
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const getUserInfo = async () => {
     try {

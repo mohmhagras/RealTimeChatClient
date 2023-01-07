@@ -32,7 +32,7 @@ export default function Sidebar() {
       </section>
       <div>
         <FriendsTitle numberOfFriends={user?.friends?.length || 0} />
-        <FriendsList friends={user?.friends} />
+        <FriendsList friends={user?.friends!} />
       </div>
     </aside>
   );

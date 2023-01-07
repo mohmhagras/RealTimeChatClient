@@ -37,7 +37,7 @@ export default function MessageBox({
     <div
       className={`
         ${styles["message-from"]} ${
-        user.username === message.fromUser
+        user?.username === message.fromUser
           ? styles["-user"]
           : styles["-otherUser"]
       } `}

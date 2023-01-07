@@ -2,7 +2,6 @@ import { FiLogIn } from "react-icons/fi";
 import React, { useRef, useContext, useState } from "react";
 import { userContext } from "../../Contexts";
 import { RequestState } from "../../interfaces";
-import ErrorWarning from "../Errors";
 import SubmitBox from "../SubmitBox";
 interface LoginResponse {
   token: string;

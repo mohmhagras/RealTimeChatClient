@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import {
   createContext,
   ReactNode,
@@ -6,7 +7,23 @@ import {
   useContext,
 } from "react";
 import { userContext } from "./UserContext";
-export const chatScreenContext = createContext(null);
+
+interface ChatScreenContextInterface {
+  newChat: string;
+  setNewChat: Dispatch<SetStateAction<string>>;
+  existingChats: string[];
+  setExistingChats: Dispatch<SetStateAction<string[]>>;
+  selectedChat: string;
+  setSelectedChat: Dispatch<SetStateAction<string>>;
+  displayMode: number;
+  setDisplayMode: Dispatch<SetStateAction<number>>;
+  showFriendRequestBox: boolean;
+  setShowFriendRequestBox: Dispatch<SetStateAction<boolean>>;
+}
+
+export const chatScreenContext = createContext<ChatScreenContextInterface>(
+  {} as ChatScreenContextInterface
+);
 
 export default function ChatScreenContextProvider({
   children,
@@ -16,7 +33,7 @@ export default function ChatScreenContextProvider({
   const { user, token } = useContext(userContext);
   const [newChat, setNewChat] = useState<string>("");
   const [existingChats, setExistingChats] = useState<Array<string>>([]);
-  const [selectedChat, setSelectedChat] = useState<string>(); //other username of selected chat
+  const [selectedChat, setSelectedChat] = useState<string>(""); //other username of selected chat
   /*
   screen modes: (mobile)      -      (desktop)
         0: first sidebar only        first sidebar only   
@@ -36,7 +53,7 @@ export default function ChatScreenContextProvider({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          usernames: [user.username, otherUsername],
+          usernames: [user?.username, otherUsername],
           messages: [],
         }),
       });
