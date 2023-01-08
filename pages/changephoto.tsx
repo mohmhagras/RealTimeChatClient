@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import styles from "../styles/changephoto.module.scss";
-import { storage } from "../config/Firebase";
+import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default function ChangePhoto() {
   const router = useRouter();
