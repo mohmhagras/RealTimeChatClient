@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { useRef, useState } from "react";
-import { storage } from "../../config/Firebase";
+import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/router";
 import { RequestState } from "../../interfaces";
