@@ -37,9 +37,6 @@ export default function FriendsTitle({
                 rotate: 0,
                 translateX: "-50%",
                 translateY: "-50%",
-                transition: {
-                  duration: 0.4,
-                },
               },
             }}
           >

@@ -47,7 +47,7 @@ export default function ChatBox({
     if (lastMessageRef) {
       lastMessageRef.current?.scrollIntoView();
     }
-  }, [messages]);
+  });
 
   return (
     <section
