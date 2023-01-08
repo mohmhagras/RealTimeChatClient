@@ -34,7 +34,7 @@ export default function Login() {
         }
       );
 
-      if (response.status === 400) {
+      if (response.status >= 400) {
         setLoadingState(RequestState.FAILED);
         setErrorText(await response.text());
         setTimeout(() => setLoadingState(RequestState.NORMAL), 2000);

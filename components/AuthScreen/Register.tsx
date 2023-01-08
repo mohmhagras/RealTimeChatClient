@@ -28,31 +28,34 @@ export default function Register() {
     const storageRef = ref(storage, `users/${usernameRef?.current?.value}`);
     await uploadBytes(storageRef, profilePicRef?.current?.files[0]!);
     const imgURL = await getDownloadURL(storageRef);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: usernameRef?.current?.value,
+            imageUrl: profilePicRef?.current?.files[0] ? imgURL : "",
+            password: passRef?.current?.value,
+          }),
+        }
+      );
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Auth/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: usernameRef?.current?.value,
-          imageUrl: profilePicRef?.current?.files[0] ? imgURL : "",
-          password: passRef?.current?.value,
-        }),
+      if (response.status >= 400) {
+        setLoadingState(RequestState.FAILED);
+        setErrorText(await response.text());
+        return;
       }
-    );
-
-    if (response.status >= 400) {
-      setLoadingState(RequestState.FAILED);
-      setErrorText(await response.text());
-      return;
+      await response.json();
+      localStorage.setItem("hasAccount", JSON.stringify(true));
+      setLoadingState(RequestState.SUCCESS);
+      router.reload();
+    } catch (error) {
+      alert(error);
     }
-    await response.json();
-    localStorage.setItem("hasAccount", JSON.stringify(true));
-    setLoadingState(RequestState.SUCCESS);
-    router.reload();
   };
 
   return (
