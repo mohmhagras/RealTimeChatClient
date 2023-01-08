@@ -29,17 +29,20 @@ export default function Register() {
     await uploadBytes(storageRef, profilePicRef?.current?.files[0]!);
     const imgURL = await getDownloadURL(storageRef);
 
-    const response = await fetch("https://localhost:7298/api/Auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: usernameRef?.current?.value,
-        imageUrl: profilePicRef?.current?.files[0] ? imgURL : "",
-        password: passRef?.current?.value,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: usernameRef?.current?.value,
+          imageUrl: profilePicRef?.current?.files[0] ? imgURL : "",
+          password: passRef?.current?.value,
+        }),
+      }
+    );
 
     if (response.status >= 400) {
       setLoadingState(RequestState.FAILED);

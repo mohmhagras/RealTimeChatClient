@@ -3,6 +3,7 @@ import React, { useRef, useContext, useState } from "react";
 import { userContext } from "../../Contexts";
 import { RequestState } from "../../interfaces";
 import SubmitBox from "../SubmitBox";
+
 interface LoginResponse {
   token: string;
 }
@@ -19,16 +20,19 @@ export default function Login() {
     event.preventDefault();
     setLoadingState(RequestState.LOADING);
     try {
-      const response = await fetch("https://localhost:7298/api/Auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: usernamRef?.current?.value,
-          password: passwordRef?.current?.value,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: usernamRef?.current?.value,
+            password: passwordRef?.current?.value,
+          }),
+        }
+      );
 
       if (response.status === 400) {
         setLoadingState(RequestState.FAILED);

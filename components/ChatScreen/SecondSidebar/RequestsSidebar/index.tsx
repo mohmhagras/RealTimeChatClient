@@ -30,7 +30,7 @@ export default function RequestsSidebar() {
   const fetchRequests = async () => {
     try {
       const response = await fetch(
-        "https://localhost:7298/api/User/friendrequests",
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/User/friendrequests`,
         {
           method: "GET",
           headers: {
@@ -53,14 +53,17 @@ export default function RequestsSidebar() {
   const acceptRequest = async (acceptedUser: User) => {
     setLoadingState(RequestState.LOADING);
     try {
-      await fetch(`https://localhost:7298/api/User/acceptrequest`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(acceptedUser),
-      });
+      await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/User/acceptrequest`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(acceptedUser),
+        }
+      );
       setRequests((prevState) =>
         prevState.filter(({ username }) => username !== acceptedUser.username)
       );

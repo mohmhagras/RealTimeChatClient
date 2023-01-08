@@ -46,17 +46,20 @@ export default function ChatScreenContextProvider({
     useState<boolean>(false);
   const createNewChat = async (otherUsername: string) => {
     try {
-      const response = await fetch("https://localhost:7298/api/Chat", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          usernames: [user?.username, otherUsername],
-          messages: [],
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Chat`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            usernames: [user?.username, otherUsername],
+            messages: [],
+          }),
+        }
+      );
       if (response.status >= 400) {
         alert(await response.text());
         return;

@@ -37,7 +37,7 @@ export default function ChatScreen() {
 
   let connection = useMemo(() => {
     return new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7298/chathub", {
+      .withUrl(`${process.env.NEXT_PUBLIC_SERVER_URL}/chathub`, {
         accessTokenFactory: () => token,
       })
       .build();
@@ -91,7 +91,7 @@ export default function ChatScreen() {
   async function fetchChats() {
     if (!newChat.length) {
       const response = await fetch(
-        "https://localhost:7298/api/Chat/getuserchats",
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Chat/getuserchats`,
         {
           method: "GET",
           headers: {

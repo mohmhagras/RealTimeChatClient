@@ -17,14 +17,17 @@ export default function ChangePhoto() {
     await uploadBytes(storageRef, profilePicRef.current.files[0]);
     const imgURL = await getDownloadURL(storageRef);
 
-    const response = await fetch(`https://localhost:7298/api/User/setimage`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: `"${imgURL}"`,
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/User/setimage`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: `"${imgURL}"`,
+      }
+    );
 
     if (response.status >= 400) {
       alert(response.statusText);

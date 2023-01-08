@@ -30,13 +30,16 @@ export default function UserContextProvider({
 
   const getUserInfo = async () => {
     try {
-      const response = await fetch("https://localhost:7298/api/User", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/User`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setUser(await response.json());
     } catch (error) {
       alert(error);

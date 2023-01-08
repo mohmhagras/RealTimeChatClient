@@ -33,7 +33,7 @@ export default function FriendRequest({
     setLoadingState(RequestState.LOADING);
     try {
       const response = await fetch(
-        `https://localhost:7298/api/User/sendrequest`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/User/sendrequest`,
         {
           method: "POST",
           headers: {
