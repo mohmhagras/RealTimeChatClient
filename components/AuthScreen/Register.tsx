@@ -31,8 +31,9 @@ export default function Register() {
     );
     if (profilePicRef?.current?.files[0])
       await uploadBytes(storageRef, profilePicRef?.current?.files[0]!);
-    const imgURL = await getDownloadURL(storageRef);
     try {
+      const imgURL = await getDownloadURL(storageRef);
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Auth/register`,
         {
