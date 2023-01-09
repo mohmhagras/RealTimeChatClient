@@ -25,8 +25,12 @@ export default function Register() {
       setTimeout(() => setLoadingState(RequestState.NORMAL), 2000);
       return;
     }
-    const storageRef = ref(storage, `users/${usernameRef?.current?.value}`);
-    await uploadBytes(storageRef, profilePicRef?.current?.files[0]!);
+    const storageRef = ref(
+      storage,
+      `users/${usernameRef?.current?.value}${new Date(Date.now())}`
+    );
+    if (profilePicRef?.current?.files[0])
+      await uploadBytes(storageRef, profilePicRef?.current?.files[0]!);
     const imgURL = await getDownloadURL(storageRef);
     try {
       const response = await fetch(
