@@ -78,6 +78,7 @@ export default function Register() {
           type="password"
           placeholder="••••••••••"
           required
+          minLength={8}
           ref={passRef}
         />
       </div>
