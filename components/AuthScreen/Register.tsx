@@ -84,7 +84,7 @@ export default function Register() {
       </div>
       <div className="vertical-left-aligned-container">
         <label>
-          Confirm Password<sup className="required-sup">*</sup>
+          Confirm password<sup className="required-sup">*</sup>
         </label>
         <input
           type="password"
