@@ -40,6 +40,7 @@ export default function ChatScreen() {
       .withUrl(`${process.env.NEXT_PUBLIC_SERVER_URL}/chathub`, {
         accessTokenFactory: () => token,
       })
+      .withAutomaticReconnect()
       .build();
   }, []);
 
