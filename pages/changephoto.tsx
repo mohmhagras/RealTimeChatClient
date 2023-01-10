@@ -13,7 +13,7 @@ import SubmitBox from "../components/SubmitBox";
 export default function ChangePhoto() {
   const router = useRouter();
   const profilePicRef = useRef<HTMLInputElement>(null);
-  const { isSignedIn, user, token } = useContext(userContext);
+  const { isSignedIn, user, token, getUserInfo } = useContext(userContext);
   const [loadingState, setLoadingState] = useState<RequestState>(
     RequestState.NORMAL
   );
@@ -34,19 +34,21 @@ export default function ChangePhoto() {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: `"${imgURL}"`,
+          body: JSON.stringify({ ImageUrl: imgURL }),
         }
       );
 
       if (response.status >= 400) {
-        alert(response.statusText);
+        setLoadingState(RequestState.FAILED);
+        setErrorText(await response.text());
         return;
       }
       await response.json();
       setLoadingState(RequestState.SUCCESS);
-      router.push("/");
+      getUserInfo();
+      setTimeout(() => router.push("/"), 1000);
     } catch (error) {
-      setErrorText(error);
+      console.error(error);
       setLoadingState(RequestState.FAILED);
     }
   };

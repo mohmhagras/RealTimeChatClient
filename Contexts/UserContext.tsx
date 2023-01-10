@@ -13,6 +13,7 @@ interface UserContextInterface {
   setToken: Dispatch<SetStateAction<string>>;
   isSignedIn: boolean;
   user: User | null;
+  getUserInfo: Function;
 }
 
 export const userContext = createContext<UserContextInterface>(
@@ -65,6 +66,7 @@ export default function UserContextProvider({
         setToken,
         isSignedIn,
         user,
+        getUserInfo,
       }}
     >
       {children}
