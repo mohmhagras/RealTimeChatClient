@@ -22,7 +22,7 @@ export default function ChangePhoto() {
     event.preventDefault();
     try {
       setLoadingState(RequestState.LOADING);
-      const storageRef = ref(storage, `users/${user?.username}`);
+      const storageRef = ref(storage, `users/${user?.username}${Date.now()}`);
       await uploadBytes(storageRef, profilePicRef.current.files[0]);
       const imgURL = await getDownloadURL(storageRef);
 
