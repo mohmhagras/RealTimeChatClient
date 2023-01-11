@@ -41,3 +41,9 @@ export enum RequestState {
   SUCCESS,
   FAILED,
 }
+
+export enum AuthStatus {
+  LOADING,
+  SIGNEDIN,
+  NOTSIGNEDIN,
+}

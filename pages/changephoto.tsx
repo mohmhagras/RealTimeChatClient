@@ -8,12 +8,12 @@ import styles from "../styles/changephoto.module.scss";
 import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { FiUploadCloud } from "react-icons/fi";
-import { RequestState } from "../interfaces";
+import { AuthStatus, RequestState } from "../interfaces";
 import SubmitBox from "../components/SubmitBox";
 export default function ChangePhoto() {
   const router = useRouter();
   const profilePicRef = useRef<HTMLInputElement>(null);
-  const { isSignedIn, user, token, getUserInfo } = useContext(userContext);
+  const { signInStatus, user, token, getUserInfo } = useContext(userContext);
   const [loadingState, setLoadingState] = useState<RequestState>(
     RequestState.NORMAL
   );
@@ -53,42 +53,32 @@ export default function ChangePhoto() {
     }
   };
 
-  if (isSignedIn)
-    return (
-      <>
-        <Head>
-          <title>Change your photo - Real Time Chat</title>
-          <meta name="description" content="Chat now with your friends!" />
-          <meta
-            name="keywords"
-            content="Chat, Real time, Messages, friends, friend requests, whatsapp, messenger"
+  function renderMainContent() {
+    if (signInStatus === AuthStatus.LOADING) {
+      return <div className="loader page"></div>;
+    } else if (signInStatus === AuthStatus.NOTSIGNEDIN) {
+      return <h1>This page is for signed in users only.</h1>;
+    } else if (signInStatus === AuthStatus.SIGNEDIN) {
+      return (
+        <form className={styles["form"]} onSubmit={handleFormSubmit}>
+          <div className="vertical-left-aligned-container">
+            <label>New Profile picture</label>
+            <input type="file" ref={profilePicRef} />
+          </div>
+          <SubmitBox
+            defaultComponent={
+              <>
+                <FiUploadCloud className="icon" />
+                Upload
+              </>
+            }
+            state={loadingState}
+            error={errorText}
           />
-          <meta name="author" content="Mohamed Hagras" />
-          <meta name="github" content="https://github.com/mohagras903" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Header />
-        <main className="vertical-center-aligned-container withPadding">
-          <form className={styles["form"]} onSubmit={handleFormSubmit}>
-            <div className="vertical-left-aligned-container">
-              <label>New Profile picture</label>
-              <input type="file" ref={profilePicRef} />
-            </div>
-            <SubmitBox
-              defaultComponent={
-                <>
-                  <FiUploadCloud className="icon" />
-                  Upload
-                </>
-              }
-              state={loadingState}
-              error={errorText}
-            />
-          </form>
-        </main>
-      </>
-    );
+        </form>
+      );
+    }
+  }
 
   return (
     <>
@@ -106,7 +96,7 @@ export default function ChangePhoto() {
       </Head>
       <Header />
       <main className="vertical-center-aligned-container withPadding">
-        <h1>This page is for signed in users only.</h1>
+        {renderMainContent()}
       </main>
     </>
   );

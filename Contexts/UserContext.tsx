@@ -6,12 +6,12 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { User } from "../interfaces";
+import { AuthStatus, User } from "../interfaces";
 
 interface UserContextInterface {
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
-  isSignedIn: boolean;
+  signInStatus: AuthStatus;
   user: User | null;
   getUserInfo: Function;
 }
@@ -25,8 +25,10 @@ export default function UserContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [token, setToken] = useState<string>("");
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [token, setToken] = useState<string>();
+  const [signInStatus, setSignInStatus] = useState<AuthStatus>(
+    AuthStatus.LOADING
+  );
   const [user, setUser] = useState<User | null>(null);
 
   const getUserInfo = async () => {
@@ -52,10 +54,12 @@ export default function UserContextProvider({
   }, []);
 
   useEffect(() => {
-    if (token.length > 1) {
+    if (token?.length > 1) {
       localStorage.setItem("token", token);
-      setIsSignedIn(true);
+      setSignInStatus(AuthStatus.SIGNEDIN);
       getUserInfo();
+    } else if (token === "") {
+      setSignInStatus(AuthStatus.NOTSIGNEDIN);
     }
   }, [token]);
 
@@ -64,7 +68,7 @@ export default function UserContextProvider({
       value={{
         token,
         setToken,
-        isSignedIn,
+        signInStatus,
         user,
         getUserInfo,
       }}
