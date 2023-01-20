@@ -20,6 +20,7 @@ export default function AuthScreen() {
         alt="logo"
         width={150}
         height={150}
+        priority
       />
       <h1>Start chatting now!</h1>
 

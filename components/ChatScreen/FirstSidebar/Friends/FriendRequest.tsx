@@ -16,7 +16,7 @@ export default function FriendRequest({
 }: {
   setShowFriendRequestBox: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { token } = useContext(userContext);
+  const { user, token } = useContext(userContext);
   const usernameRef = useRef<HTMLInputElement>();
   const [isFormAccessible, setIsFormAccessibile] = useState<boolean>(false);
   const [loadingState, setLoadingState] = useState<RequestState>(
@@ -31,6 +31,14 @@ export default function FriendRequest({
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setLoadingState(RequestState.LOADING);
+    if (usernameRef.current.value === user.username) {
+      setLoadingState(RequestState.FAILED);
+      setErrorText("You can't send a friend request to yourself!");
+      setTimeout(() => {
+        setLoadingState(RequestState.NORMAL);
+      }, 3000);
+      return;
+    }
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/User/sendrequest`,
