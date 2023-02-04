@@ -26,9 +26,7 @@ export default function UserContextProvider({
   children: ReactNode;
 }) {
   const [token, setToken] = useState<string>();
-  const [signInStatus, setSignInStatus] = useState<AuthStatus>(
-    AuthStatus.LOADING
-  );
+  const [signInStatus, setSignInStatus] = useState(AuthStatus.LOADING);
   const [user, setUser] = useState<User | null>(null);
 
   const getUserInfo = async () => {

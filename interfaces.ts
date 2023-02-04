@@ -23,9 +23,11 @@ export interface Message {
   status: Status;
 }
 
+type Usernames = [user1: string, user2: string];
+
 export interface Chat {
   id?: string;
-  usernames: Array<string>;
+  usernames: Usernames;
   messages: Array<Message>;
 }
 

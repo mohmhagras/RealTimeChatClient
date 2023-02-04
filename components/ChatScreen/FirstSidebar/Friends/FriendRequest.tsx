@@ -18,10 +18,8 @@ export default function FriendRequest({
 }) {
   const { user, token } = useContext(userContext);
   const usernameRef = useRef<HTMLInputElement>();
-  const [isFormAccessible, setIsFormAccessibile] = useState<boolean>(false);
-  const [loadingState, setLoadingState] = useState<RequestState>(
-    RequestState.NORMAL
-  );
+  const [isFormAccessible, setIsFormAccessibile] = useState(false);
+  const [loadingState, setLoadingState] = useState(RequestState.NORMAL);
   const [errorText, setErrorText] = useState<string>("");
   useEffect(() => {
     setTimeout(() => {

@@ -12,10 +12,8 @@ export default function Register() {
   const profilePicRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const confirmPassRef = useRef<HTMLInputElement>(null);
-  const [loadingState, setLoadingState] = useState<RequestState>(
-    RequestState.NORMAL
-  );
-  const [errorText, setErrorText] = useState<string>("");
+  const [loadingState, setLoadingState] = useState(RequestState.NORMAL);
+  const [errorText, setErrorText] = useState("");
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setLoadingState(RequestState.LOADING);

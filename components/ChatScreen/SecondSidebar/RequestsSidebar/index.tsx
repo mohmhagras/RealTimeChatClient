@@ -14,11 +14,9 @@ export default function RequestsSidebar() {
   const screenWidth = viewport.width();
   const { token, user } = useContext(userContext);
   const [requests, setRequests] = useState<Array<User>>([]);
-  const [loadingState, setLoadingState] = useState<RequestState>(
-    RequestState.NORMAL
-  );
-  const [isFetchingRequests, setIsFetchingRequests] = useState<boolean>(true);
-  const countMutualFriends = (friends: Array<Friend>): number => {
+  const [loadingState, setLoadingState] = useState(RequestState.NORMAL);
+  const [isFetchingRequests, setIsFetchingRequests] = useState(true);
+  const countMutualFriends = (friends: Array<Friend>) => {
     let count = 0;
     friends.forEach(({ username }) => {
       user?.friends.forEach((friend) => {

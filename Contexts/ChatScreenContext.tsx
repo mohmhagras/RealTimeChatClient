@@ -31,9 +31,9 @@ export default function ChatScreenContextProvider({
   children: ReactNode;
 }) {
   const { user, token } = useContext(userContext);
-  const [newChat, setNewChat] = useState<string>("");
+  const [newChat, setNewChat] = useState("");
   const [existingChats, setExistingChats] = useState<Array<string>>([]);
-  const [selectedChat, setSelectedChat] = useState<string>(""); //other username of selected chat
+  const [selectedChat, setSelectedChat] = useState(""); //other username of selected chat
   /*
   screen modes: (mobile)      -      (desktop)
         0: first sidebar only        first sidebar only   

@@ -29,7 +29,7 @@ export default function ChatsSidebar({ chats }: { chats: Chat[] }) {
           }
         );
 
-        const secondLineText = (): string => {
+        const secondLineText = () => {
           const messagesLength = chat.messages.length;
           if (!messagesLength) {
             return "No messages";

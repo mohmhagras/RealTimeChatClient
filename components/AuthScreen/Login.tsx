@@ -12,10 +12,8 @@ export default function Login() {
   const usernamRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const { setToken } = useContext(userContext);
-  const [loadingState, setLoadingState] = useState<RequestState>(
-    RequestState.NORMAL
-  );
-  const [errorText, setErrorText] = useState<string>("");
+  const [loadingState, setLoadingState] = useState(RequestState.NORMAL);
+  const [errorText, setErrorText] = useState("");
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoadingState(RequestState.LOADING);
