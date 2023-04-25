@@ -19,6 +19,7 @@ export default function ChatBox({
   const { user } = useContext(userContext);
   const { displayMode } = useContext(chatScreenContext);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [smoothScrollFlag, setSmoothScrollFlag] = useState(false);
 
   const { messages, usernames } = chatData;
 
@@ -44,6 +45,12 @@ export default function ChatBox({
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      setSmoothScrollFlag(true);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
     if (lastMessageRef) {
       lastMessageRef.current?.scrollIntoView();
     }
@@ -57,7 +64,9 @@ export default function ChatBox({
             ? styles["two-sidebars-width"]
             : styles["no-sidebar-width"]
           : styles["one-sidebar-width"]
-      } ${screenWidth < 670 || !displayMode ? styles["title-bar-exists"] : ""}`}
+      } ${
+        screenWidth < 670 || !displayMode ? styles["title-bar-exists"] : ""
+      } ${smoothScrollFlag ? styles["smooth-scroll"] : ""}`}
     >
       {screenWidth < 670 || !displayMode ? <Title friend={otherUser!} /> : null}
       {messages.map((msg, index) => {
