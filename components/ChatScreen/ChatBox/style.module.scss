@@ -2,6 +2,7 @@
 @import "../../../styles/mixins";
 
 .chat-box {
+  scroll-behavior: smooth;
   position: relative;
   overflow-y: scroll;
   margin-bottom: 42px;
