@@ -7,7 +7,7 @@ import {
   SetStateAction,
 } from "react";
 import { AuthStatus, User } from "../interfaces";
-
+import { useRouter } from "next/router";
 interface UserContextInterface {
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
@@ -25,6 +25,7 @@ export default function UserContextProvider({
 }: {
   children: ReactNode;
 }) {
+  const router = useRouter();
   const [token, setToken] = useState<string>();
   const [signInStatus, setSignInStatus] = useState(AuthStatus.LOADING);
   const [user, setUser] = useState<User | null>(null);
@@ -43,7 +44,8 @@ export default function UserContextProvider({
       );
       setUser(await response.json());
     } catch (error) {
-      alert(error);
+      localStorage.removeItem("token");
+      router.reload();
     }
   };
 
